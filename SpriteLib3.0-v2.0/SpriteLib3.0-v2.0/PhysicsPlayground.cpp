@@ -14,17 +14,10 @@ PhysicsPlayground::PhysicsPlayground(std::string name)
 
 void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 {
-	//Dynamically allocates the register
 	m_sceneReg = new entt::registry;
-
-	//Attach the register
 	ECS::AttachRegister(m_sceneReg);
-
-	//Sets up aspect ratio for the camera
 	float aspectRatio = windowWidth / windowHeight;
 
-	EffectManager::CreateEffect(EffectType::Vignette, windowWidth, windowHeight);
-	EffectManager::CreateEffect(EffectType::Sepia, windowWidth, windowHeight);
 	
 
 	//Setup MainCamera Entity
