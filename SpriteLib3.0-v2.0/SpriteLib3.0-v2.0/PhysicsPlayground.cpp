@@ -14,11 +14,10 @@ PhysicsPlayground::PhysicsPlayground(std::string name)
 
 void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 {
+	Scene::SetClearColor(vec4(0.f, 0.f, 0.f, 1.f));
 	m_sceneReg = new entt::registry;
 	ECS::AttachRegister(m_sceneReg);
 	float aspectRatio = windowWidth / windowHeight;
-
-	
 
 	//Setup MainCamera Entity
 	{
@@ -129,20 +128,7 @@ void PhysicsPlayground::KeyboardHold()
 void PhysicsPlayground::KeyboardDown()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
-	auto& canJump = ECS::GetComponent<CanJump>(MainEntities::MainPlayer());
 
-	if (Input::GetKeyDown(Key::T))
-	{
-		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
-	}
-	if (canJump.m_canJump)
-	{
-		if (Input::GetKeyDown(Key::Space))
-		{
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 160000.f), true);
-			canJump.m_canJump = false;
-		}
-	}
 }
 
 void PhysicsPlayground::KeyboardUp()
