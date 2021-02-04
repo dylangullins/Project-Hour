@@ -602,31 +602,29 @@ void PhysicsPlayground::KeyboardHold()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 
-	float speed = 1.f;
-	b2Vec2 vel = b2Vec2(0.f, 0.f);
 
-	if (Input::GetKey(Key::Shift))
+	if (Input::GetKey(Key::W))
 	{
-		speed *= 5.f;
+		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
+		player.SetRotationAngleDeg(90.f);
 	}
 
 	if (Input::GetKey(Key::A))
 	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(-400000.f * speed, 0.f), true);
-	}
-	if (Input::GetKey(Key::D))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(400000.f * speed, 0.f), true);
+		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
+		player.SetRotationAngleDeg(180.f);
 	}
 
-	//Change physics body size for circle
-	if (Input::GetKey(Key::O))
+	if (Input::GetKey(Key::S))
 	{
-		player.ScaleBody(1.3 * Timer::deltaTime, 0);
+		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
+		player.SetRotationAngleDeg(270.f);
 	}
-	else if (Input::GetKey(Key::I))
+
+	if (Input::GetKey(Key::D))
 	{
-		player.ScaleBody(-1.3 * Timer::deltaTime, 0);
+		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
+		player.SetRotationAngleDeg(0.f);
 	}
 }
 
