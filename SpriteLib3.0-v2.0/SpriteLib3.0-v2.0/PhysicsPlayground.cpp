@@ -95,28 +95,6 @@ void PhysicsPlayground::Update()
 	
 }
 
-void PhysicsPlayground::GUI()
-{
-
-}
-
-void PhysicsPlayground::GUIWindowUI()
-{
-
-}
-
-void PhysicsPlayground::GUIWindowOne()
-{
-
-}
-
-void PhysicsPlayground::GUIWindowTwo()
-{
-	
-}
-
-
-
 
 void PhysicsPlayground::KeyboardHold()
 {

@@ -13,13 +13,6 @@ public:
 
 	void Update() override;
 
-	void GUI() override;
-
-	void GUIWindowUI();
-	void GUIWindowOne();
-	void GUIWindowTwo();
-
-
 	//Input overrides
 	void KeyboardHold() override;
 	void KeyboardDown() override;
