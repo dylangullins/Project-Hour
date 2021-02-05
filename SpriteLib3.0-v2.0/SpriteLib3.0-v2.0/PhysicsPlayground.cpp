@@ -101,7 +101,10 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 
 void PhysicsPlayground::Update()
 {
-	
+	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
+	Scene::AdjustScrollOffset();
+
+	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 }
 
 
