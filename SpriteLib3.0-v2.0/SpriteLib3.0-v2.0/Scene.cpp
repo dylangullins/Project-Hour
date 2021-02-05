@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Utilities.h"
+#include "BulletCollide.h"
 
 Scene::Scene(std::string name)
 {
@@ -129,6 +130,51 @@ void Scene::CreateCameraEntity(bool mainCamera, float windowWidth, float windowH
 			ECS::GetComponent<VerticalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 		}
 	}
+}
+
+unsigned Scene::CreateBullet(float posX, float posY)
+{
+	auto entity = ECS::CreateEntity();
+	auto player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer()); //Ignore green line; game crashes if you follow it's suggestion.
+
+	//Adding Components
+	ECS::AttachComponent<Sprite>(entity);
+	ECS::AttachComponent<Transform>(entity);
+	ECS::AttachComponent<PhysicsBody>(entity);
+	ECS::AttachComponent<BulletCollide>(entity);
+
+	//Setting up components
+	std::string fileName = "hexagon.png";
+	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 5, 1);
+	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+	ECS::GetComponent<Transform>(entity).SetPosition(vec3(posX, posY, 22.f));
+
+	auto& bulletSpr = ECS::GetComponent<Sprite>(entity);
+	auto& bulletPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+	float shrinkX = 8.f;
+
+	b2Body* bulletBody;
+	b2BodyDef bulletDef;
+	bulletDef.type = b2_dynamicBody;
+	float bulletForce = 32000.f;
+	float playerAngle = player.GetRotationAngleDeg() * (PI / 180);
+
+	vec2 initialDirection = vec2(13.f, 0.f);
+	mat2 rotationMatrix = mat2(vec2(cos(playerAngle), -sin(playerAngle)), vec2(sin(playerAngle), cos(playerAngle)));
+	vec2 rotatedDirection = rotationMatrix.operator*(initialDirection);
+	bulletDef.position.Set(posX + rotatedDirection.x, posY + rotatedDirection.y);
+
+
+	bulletBody = m_physicsWorld->CreateBody(&bulletDef);
+
+	bulletPhsBody = PhysicsBody(entity, bulletBody, float(bulletSpr.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f); //circle body
+
+	bulletBody->SetFixedRotation(false);
+	bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
+	bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
+	bulletBody->ApplyLinearImpulseToCenter(b2Vec2(bulletForce * rotatedDirection.x, bulletForce * rotatedDirection.y), true);
+	return entity;
 }
 
 entt::registry* Scene::GetScene() const

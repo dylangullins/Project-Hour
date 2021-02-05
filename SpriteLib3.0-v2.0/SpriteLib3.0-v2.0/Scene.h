@@ -41,6 +41,7 @@ public:
 	virtual void KeyboardHold() { };
 	virtual void KeyboardDown() { };
 	virtual void KeyboardUp() { };
+	unsigned CreateBullet(float posX, float posY);
 
 	//Mouse Input
 	//Because these are virtual you can override them in your inherited classes.

@@ -2,6 +2,7 @@
 #include "Utilities.h"
 
 #include <random>
+#include "Ammo.h"
 
 PhysicsPlayground::PhysicsPlayground(std::string name)
 	: Scene(name)
@@ -41,7 +42,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<VerticalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 	}
 
-	//Link entity
+	//Player entity
 	{
 		auto entity = ECS::CreateEntity();
 
@@ -52,10 +53,11 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<Ammo>(entity);
 
 		//set components
 		std::string fileName = "Front.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 50);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
 
@@ -127,9 +129,15 @@ void PhysicsPlayground::KeyboardDown()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 
-	if (Input::GetKeyDown(Key::T))
+	if (Input::GetKeyDown(Key::F))
 	{
-		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
+		if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo > 0)
+		{
+			bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+			bulletStorage.push_back(bulletEntity);
+			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo -= 1;
+			//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+		}
 	}
 }
 

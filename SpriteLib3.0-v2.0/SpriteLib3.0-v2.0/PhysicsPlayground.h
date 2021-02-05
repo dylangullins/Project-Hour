@@ -18,6 +18,8 @@ public:
 	void KeyboardDown() override;
 	void KeyboardUp() override;
 
+	std::vector<int> bulletStorage;
+
 protected:
 	bool m_firstWindow = false;
 	bool m_secondWindow = false;
@@ -28,4 +30,6 @@ protected:
 
 	int puzzleWall1;
 	int puzzleWall2;
+	int ammoEntity = -1;
+	int bulletEntity = -1;
 };
