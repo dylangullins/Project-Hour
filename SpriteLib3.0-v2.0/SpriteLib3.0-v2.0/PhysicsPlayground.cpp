@@ -127,9 +127,7 @@ void PhysicsPlayground::KeyboardDown()
 
 	if (Input::GetKeyDown(Key::T))
 	{
-
-	PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
-
+		PhysicsBody::SetDraw(!PhysicsBody::GetDraw());
 	}
 }
 
