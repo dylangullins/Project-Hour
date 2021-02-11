@@ -3,6 +3,7 @@
 
 #include <random>
 #include "Ammo.h"
+#include "BulletCollide.h"
 
 PhysicsPlayground::PhysicsPlayground(std::string name)
 	: Scene(name)
@@ -92,6 +93,36 @@ void PhysicsPlayground::Update()
 	Scene::AdjustScrollOffset();
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
+
+	
+	for (int i = 0; i < bulletStorage.size(); i++)
+	{
+		if (ECS::GetComponent<BulletCollide>(bulletStorage[i]).collided == true)
+		{
+			PhysicsBody::m_bodiesToDelete.push_back(bulletStorage[i]);
+			bulletStorage.erase(bulletStorage.begin() + i);
+		}
+	}
+
+	if (weapon == 1)
+	{
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout1, 20, 20, false);
+	}
+	
+	if (weapon == 2)
+	{
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout2, 20, 20, false);
+	}
+
+	if (weapon == 3)
+	{
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout3, 20, 20, false);
+	}
+
+	if (weapon == 4)
+	{
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout4, 20, 20, false);
+	}
 }
 
 
@@ -131,13 +162,105 @@ void PhysicsPlayground::KeyboardDown()
 
 	if (Input::GetKeyDown(Key::F))
 	{
-		if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo > 0)
+		switch (weapon)
 		{
-			bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
-			bulletStorage.push_back(bulletEntity);
-			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo -= 1;
-			//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+		case 1:
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 > 0)
+			{
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletStorage.push_back(bulletEntity);
+				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 -= 1;
+				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+			}
+
+			break;
+
+		case 2:
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 > 0)
+			{
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletStorage.push_back(bulletEntity);
+				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 -= 1;
+				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+			}
+
+			break;
+
+		case 3:
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 > 0)
+			{
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletStorage.push_back(bulletEntity);
+				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 -= 1;
+				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+			}
+
+			break;
+
+		case 4:
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 > 0)
+			{
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletStorage.push_back(bulletEntity);
+				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 -= 1;
+				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
+			}
+
+			break;
 		}
+	}
+
+	if (Input::GetKeyDown(Key::R))
+	{
+		switch (weapon)
+		{
+		case 1:
+
+			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 = 30;
+
+			break;
+
+		case 2:
+
+			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 = 10;
+
+			break;
+
+		case 3:
+
+			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 = 20;
+
+			break;
+
+		case 4:
+
+			ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 = 5;
+
+			break;
+		}
+	}
+
+	if (Input::GetKeyDown(Key::U))
+	{
+		weapon = 1;
+	}
+
+	if (Input::GetKeyDown(Key::I))
+	{
+		weapon = 2;
+	}
+
+	if (Input::GetKeyDown(Key::O))
+	{
+		weapon = 3;
+	}
+
+	if (Input::GetKeyDown(Key::L))
+	{
+		weapon = 4;
 	}
 }
 

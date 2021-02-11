@@ -34,4 +34,10 @@ protected:
 	int puzzleWall2;
 	int ammoEntity = -1;
 	int bulletEntity = -1;
+	int weapon = 1;
+
+	std::string loadout1 = "Front.png";
+	std::string loadout2 = "Front.png";
+	std::string loadout3 = "Front.png";
+	std::string loadout4 = "Front.png";
 };
