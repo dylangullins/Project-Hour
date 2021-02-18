@@ -4,6 +4,7 @@
 #include <random>
 #include "Ammo.h"
 #include "BulletCollide.h"
+#include "HP.h"
 
 PhysicsPlayground::PhysicsPlayground(std::string name)
 	: Scene(name)
@@ -94,6 +95,14 @@ void PhysicsPlayground::Update()
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 
+	for (int x = 0; x < activeEnemies.size(); x++)
+	{
+		if (ECS::GetComponent<HP>(activeEnemies[x]).hp <= 0)
+		{
+			PhysicsBody::m_bodiesToDelete.push_back(activeEnemies[x]);
+			activeEnemies.erase(activeEnemies.begin() + x);
+		}
+	}
 	
 	for (int i = 0; i < bulletStorage.size(); i++)
 	{
@@ -171,7 +180,6 @@ void PhysicsPlayground::KeyboardDown()
 				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 -= 1;
-				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
 			}
 
 			break;
@@ -183,7 +191,6 @@ void PhysicsPlayground::KeyboardDown()
 				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 -= 1;
-				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
 			}
 
 			break;
@@ -195,7 +202,6 @@ void PhysicsPlayground::KeyboardDown()
 				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 -= 1;
-				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
 			}
 
 			break;
@@ -206,7 +212,6 @@ void PhysicsPlayground::KeyboardDown()
 				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 -= 1;
-				//std::cout << "Ammo count: " << ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo << std::endl;
 			}
 
 			break;
@@ -268,6 +273,51 @@ void PhysicsPlayground::KeyboardUp()
 {
 	
 
+}
+
+void PhysicsPlayground::Track()
+{
+	for (int i = 0; i < activeEnemies.size(); i++)
+	{
+		auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
+		auto& enemy = ECS::GetComponent<PhysicsBody>(activeEnemies[i]);
+
+		vec2 total = vec2(player.GetPosition().x - enemy.GetPosition().x, player.GetPosition().y - enemy.GetPosition().y);
+		float length = (sqrt((total.x * total.x) + (total.y * total.y)));
+		vec2 normal = vec2(total.x / length, total.y / length);
+
+		for(int x = 0; x < 50; x++)
+		{
+			if (player.GetPosition().x + x == enemy.GetPosition().x || player.GetPosition().y + x == enemy.GetPosition().y)
+			{
+				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
+			}
+			
+			if (player.GetPosition().x - x == enemy.GetPosition().x || player.GetPosition().y - x == enemy.GetPosition().y)
+			{
+				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
+			}
+		}
+
+		b2Vec2 defaultVector = b2Vec2(1, 0);//0 degrees
+
+		b2Vec2 playerPos = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer()).GetPosition();
+		b2Vec2 enemyPos = ECS::GetComponent<PhysicsBody>(activeEnemies[i]).GetPosition();
+		b2Vec2 vectorToPlayer = playerPos - enemyPos;
+
+		float dot = (defaultVector.x * vectorToPlayer.x + defaultVector.y * vectorToPlayer.y);
+		float angle = acos(dot / (vectorToPlayer.Length() * defaultVector.Length()));
+
+		if (vectorToPlayer.y >= 0)
+		{
+			ECS::GetComponent<PhysicsBody>(activeEnemies[i]).SetRotationAngleDeg(angle * (180 / PI));
+		}
+
+		else if (vectorToPlayer.y < 0)
+		{
+			ECS::GetComponent<PhysicsBody>(activeEnemies[i]).SetRotationAngleDeg(-angle * (180 / PI));
+		}
+	}
 }
 
 void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy) 

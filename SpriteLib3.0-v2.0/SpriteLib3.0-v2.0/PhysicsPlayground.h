@@ -19,8 +19,10 @@ public:
 	void KeyboardHold() override;
 	void KeyboardDown() override;
 	void KeyboardUp() override;
+	void Track();
 
 	std::vector<int> bulletStorage;
+	std::vector<int> activeEnemies;
 
 protected:
 	bool m_firstWindow = false;
