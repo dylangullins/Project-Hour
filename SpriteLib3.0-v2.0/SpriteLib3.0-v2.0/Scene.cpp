@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Utilities.h"
 #include "BulletCollide.h"
+#include "HP.h"
 
 Scene::Scene(std::string name)
 {
@@ -176,6 +177,45 @@ unsigned Scene::CreateBullet(float posX, float posY)
 	bulletBody->ApplyLinearImpulseToCenter(b2Vec2(bulletForce * rotatedDirection.x, bulletForce * rotatedDirection.y), true);
 	return entity;
 }
+
+unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation)
+{
+	srand(time(NULL));
+	auto entity = ECS::CreateEntity();
+
+	//Add components
+	ECS::AttachComponent<Sprite>(entity);
+	ECS::AttachComponent<Transform>(entity);
+	ECS::AttachComponent<PhysicsBody>(entity);
+	ECS::AttachComponent<HP>(entity);
+
+	//Sets up the components
+	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 50);
+	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+	ECS::GetComponent<Transform>(entity).SetPosition(vec3(X, Y, 3.f));
+	ECS::GetComponent<HP>(entity).hp = 50;
+
+
+	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
+	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+
+	b2Body* tempBody;
+	b2BodyDef tempDef;
+	tempDef.type = b2_dynamicBody;
+	tempDef.position.Set(float32(X), float32(Y));
+
+	tempBody = m_physicsWorld->CreateBody(&tempDef);
+
+	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth()), vec2(0.f, 0.f), false,
+		ENEMY, PLAYER | OBJECTS | GROUND | ENVIRONMENT, 0.5f, 1.2f); //circle body
+
+	tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));
+
+	return entity;
+}
+
+
+
 
 entt::registry* Scene::GetScene() const
 {

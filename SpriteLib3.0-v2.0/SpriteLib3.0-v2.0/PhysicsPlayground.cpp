@@ -55,6 +55,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
+		ECS::AttachComponent<HP>(entity);
 		ECS::AttachComponent<Ammo>(entity);
 
 		//set components
@@ -125,6 +126,13 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 430.f, -40.f, 150, 10, 0.f);
 	MakePlatform(fileName, 700.f, 180.f, 185, 10, 0.f);
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
+
+	// enemy spawn
+	{
+		std::string filename = "";
+		activeEnemies.push_back(Scene::CreateEnemy(filename, 0, 0, 0, 0, 0));
+	}
+
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 }
@@ -376,3 +384,6 @@ void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y,
 	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 	ECS::GetComponent<Transform>(entity).SetPosition(vec3(X, Y, rotation));
 }
+
+
+
