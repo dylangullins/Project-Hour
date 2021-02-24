@@ -83,7 +83,48 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 	}
-
+/*
+	The Lab
+	*/
+	std::string fileName = "LabWall.png";
+	MakePlatform(fileName, 0.f, 0.f, 100, 10, 0.f);
+	MakePlatform(fileName, -50.f, 50, 10, 100, 0.f);
+	MakePlatform(fileName, 50.f, 50.f, 10, 100, 0.f);
+	MakePlatform(fileName, -30.f, 100.f, 35, 10, 0.f);
+	MakePlatform(fileName, 30.f, 100.f, 35, 10, 0.f);
+	MakePlatform(fileName, -50.f, 140.f, 10, 85, 0.f);
+	MakePlatform(fileName, 95.f, 180.f, 300, 10, 0.f);
+	MakePlatform(fileName, 75.f, 230.f, 10, 95, 0.f);
+	MakePlatform(fileName, 270.f, 275.f, 400, 10, 0.f);
+	MakePlatform(fileName, 305.f, 190.f, 10, 25, 0.f);
+	MakePlatform(fileName, 390.f, 205, 175, 10, 0.f);
+	MakePlatform(fileName, 650.f, 275.f, 375, 10, 0.f);
+	MakePlatform(fileName, 670.f, -150.f, 900, 10, 70.f);
+	MakePlatform(fileName, 270.f, -570.f, 500, 10, 0.f);
+	MakePlatform(fileName, 50.f, -270.f, 600, 10, 270.f);
+	MakePlatform(fileName, 150.f, -160.f, 200, 10, 0.f);
+	MakePlatform(fileName, 250.f, -220.f, 10, 130, 0.f); 
+	MakePlatform(fileName, 200.f, -280.f, 100, 10, 0.f);
+	MakePlatform(fileName, 180.f, -340.f, 80, 10, 0.f);
+	MakePlatform(fileName, 170.f, -370.f, 60, 10, 90.f);
+	MakePlatform(fileName, 80.f, -460.f, 60, 10, 0.f);
+	MakePlatform(fileName, 210.f, -400.f, 90, 10, 0.f);
+	MakePlatform(fileName, 250.f, -370.f, 10, 70, 0.f);
+	MakePlatform(fileName, 250.f, -390.f, 10, 60, 0.f);
+	MakePlatform(fileName, 250.f, -520.f, 10, 90, 0.f); 
+	MakePlatform(fileName, 450.f, -440.f, 225, 10, 0.f);
+	MakePlatform(fileName, 360.f, -60.f, 10, 400, 0.f);
+	MakePlatform(fileName, 405.f, 140.f, 100, 10, 0.f);
+	MakePlatform(fileName, 455.f, 100.f, 10, 90, 0.f);
+	MakePlatform(fileName, 505.f, 100.f, 100, 10, 0.f);
+	MakePlatform(fileName, 605.f, 140.f, 100, 10, 0.f);
+	MakePlatform(fileName, 555.f, 100.f, 10, 90, 0.f); 
+	MakePlatform(fileName, 655.f, 75.f, 10, 140, 0.f);
+	MakePlatform(fileName, 576.2f, -80.f, 250, 10, 50.f);
+	MakePlatform(fileName, 497.f, -218.f, 10, 90, 0.f);
+	MakePlatform(fileName, 430.f, -40.f, 150, 10, 0.f);
+	MakePlatform(fileName, 700.f, 180.f, 185, 10, 0.f);
+	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 }
@@ -320,7 +361,7 @@ void PhysicsPlayground::Track()
 	}
 }
 
-void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy) 
+void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation)
 {
 	auto entity = ECS::CreateEntity();
 
@@ -346,4 +387,5 @@ void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y,
 	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth() - shrinkX),
 		float(tempSpr.GetHeight() - shrinkY), vec2(0.f, 0.f), false, GROUND, PLAYER | ENEMY | OBJECTS);
 	tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
+	tempPhsBody.SetRotationAngleDeg(rotation);
 }
