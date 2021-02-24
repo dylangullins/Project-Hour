@@ -13,7 +13,7 @@ public:
 
 	void Update() override;
 
-	void MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy);
+	void MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation);
 
 	//Input overrides
 	void KeyboardHold() override;

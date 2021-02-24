@@ -135,7 +135,7 @@ void Scene::CreateCameraEntity(bool mainCamera, float windowWidth, float windowH
 unsigned Scene::CreateBullet(float posX, float posY)
 {
 	auto entity = ECS::CreateEntity();
-	auto player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer()); //Ignore green line; game crashes if you follow it's suggestion.
+	auto player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 
 	//Adding Components
 	ECS::AttachComponent<Sprite>(entity);
