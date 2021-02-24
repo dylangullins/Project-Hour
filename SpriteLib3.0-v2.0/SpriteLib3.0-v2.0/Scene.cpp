@@ -1,5 +1,9 @@
 #include "Scene.h"
 #include "Utilities.h"
+#include <time.h>
+#include "Matrix.h"
+#include <Box2D/Box2D.h>
+#include <vector>
 #include "BulletCollide.h"
 #include "HP.h"
 
@@ -77,14 +81,8 @@ void Scene::InitScene(float windowWidth, float windowHeight)
 void Scene::Update()
 {
 	auto& tempSpr = m_sceneReg->get<Sprite>(m_helloWorldSign);
-	
+
 	tempSpr.SetTransparency((0.5 * sin(Timer::time * 3.f)) + 0.5f);
-}
-
-void Scene::GUI()
-{
-	//Does nothin
-
 }
 
 void Scene::AdjustScrollOffset()
@@ -94,12 +92,12 @@ void Scene::AdjustScrollOffset()
 
 	float playerHalfSize = ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).GetWidth() / 2.f;
 
-	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetOffset((maxSizeX * BackEnd::GetAspectRatio()) - playerHalfSize);
-	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetOffset(maxSizeY - playerHalfSize);
+	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetOffset((maxSizeX * BackEnd::GetAspectRatio()) - playerHalfSize * 11);
+	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetOffset(maxSizeY - playerHalfSize * 6);
 }
 
-void Scene::CreateCameraEntity(bool mainCamera, float windowWidth, float windowHeight, float left, float right, float bottom, float top, 
-									float zNear, float zFar, float aspectRatio, bool vertScroll, bool horizScroll)
+void Scene::CreateCameraEntity(bool mainCamera, float windowWidth, float windowHeight, float left, float right, float bottom, float top,
+	float zNear, float zFar, float aspectRatio, bool vertScroll, bool horizScroll)
 {
 	//Setup main camera
 	{
@@ -133,6 +131,13 @@ void Scene::CreateCameraEntity(bool mainCamera, float windowWidth, float windowH
 	}
 }
 
+
+void Scene::GUI()
+{
+	//Does nothin
+
+}
+
 unsigned Scene::CreateBullet(float posX, float posY)
 {
 	auto entity = ECS::CreateEntity();
@@ -150,7 +155,7 @@ unsigned Scene::CreateBullet(float posX, float posY)
 	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 	ECS::GetComponent<Transform>(entity).SetPosition(vec3(posX, posY, 22.f));
 
-	auto& bulletSpr = ECS::GetComponent<Sprite>(entity);
+	auto& fired = ECS::GetComponent<Sprite>(entity);
 	auto& bulletPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 	float shrinkX = 8.f;
@@ -169,18 +174,18 @@ unsigned Scene::CreateBullet(float posX, float posY)
 
 	bulletBody = m_physicsWorld->CreateBody(&bulletDef);
 
-	bulletPhsBody = PhysicsBody(entity, bulletBody, float(bulletSpr.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f); //circle body
+	bulletPhsBody = PhysicsBody(entity, bulletBody, float(fired.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f); //circle body
 
 	bulletBody->SetFixedRotation(false);
 	bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
 	bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
 	bulletBody->ApplyLinearImpulseToCenter(b2Vec2(bulletForce * rotatedDirection.x, bulletForce * rotatedDirection.y), true);
+
 	return entity;
 }
 
 unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation)
 {
-	srand(time(NULL));
 	auto entity = ECS::CreateEntity();
 
 	//Add components
@@ -213,8 +218,6 @@ unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, 
 
 	return entity;
 }
-
-
 
 
 entt::registry* Scene::GetScene() const

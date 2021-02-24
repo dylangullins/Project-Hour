@@ -20,26 +20,22 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	Scene::SetClearColor(vec4(0.f, 0.f, 0.f, 1.f));
 	m_sceneReg = new entt::registry;
 	ECS::AttachRegister(m_sceneReg);
+
 	float aspectRatio = windowWidth / windowHeight;
 
-	//Setup MainCamera Entity
+	//Creates Camera Entity
 	{
-
-		//Creates Camera entity
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainCamera(entity, true);
-
-		//Creates new orthographic camera
 		ECS::AttachComponent<Camera>(entity);
 		ECS::AttachComponent<HorizontalScroll>(entity);
 		ECS::AttachComponent<VerticalScroll>(entity);
 
-		vec4 temp = vec4(-75.f, 75.f, -75.f, 75.f);
+		vec4 temp = vec4(-150, 150, -150, 150);
 		ECS::GetComponent<Camera>(entity).SetOrthoSize(temp);
 		ECS::GetComponent<Camera>(entity).SetWindowSize(vec2(float(windowWidth), float(windowHeight)));
-		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
+		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100, 100);
 
-		//Attaches the camera to vert and horiz scrolls
 		ECS::GetComponent<HorizontalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 		ECS::GetComponent<VerticalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 	}
@@ -60,7 +56,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 
 		//set components
 		std::string fileName = "Front.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 50);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
 
