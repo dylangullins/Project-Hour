@@ -20,22 +20,26 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	Scene::SetClearColor(vec4(0.f, 0.f, 0.f, 1.f));
 	m_sceneReg = new entt::registry;
 	ECS::AttachRegister(m_sceneReg);
-
 	float aspectRatio = windowWidth / windowHeight;
 
-	//Creates Camera Entity
+	//Setup MainCamera Entity
 	{
+
+		//Creates Camera entity
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainCamera(entity, true);
+
+		//Creates new orthographic camera
 		ECS::AttachComponent<Camera>(entity);
 		ECS::AttachComponent<HorizontalScroll>(entity);
 		ECS::AttachComponent<VerticalScroll>(entity);
 
-		vec4 temp = vec4(-150, 150, -150, 150);
+		vec4 temp = vec4(-75.f, 75.f, -75.f, 75.f);
 		ECS::GetComponent<Camera>(entity).SetOrthoSize(temp);
 		ECS::GetComponent<Camera>(entity).SetWindowSize(vec2(float(windowWidth), float(windowHeight)));
-		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100, 100);
+		ECS::GetComponent<Camera>(entity).Orthographic(aspectRatio, temp.x, temp.y, temp.z, temp.w, -100.f, 100.f);
 
+		//Attaches the camera to vert and horiz scrolls
 		ECS::GetComponent<HorizontalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 		ECS::GetComponent<VerticalScroll>(entity).SetCam(&ECS::GetComponent<Camera>(entity));
 	}
@@ -51,12 +55,11 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
-		ECS::AttachComponent<HP>(entity);
 		ECS::AttachComponent<Ammo>(entity);
 
 		//set components
 		std::string fileName = "Front.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 50);
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
 
@@ -80,7 +83,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 	}
-/*
+	/*
 	The Lab
 	*/
 	std::string fileName = "LabWall.png";
@@ -100,7 +103,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 270.f, -570.f, 500, 10, 0.f);
 	MakePlatform(fileName, 50.f, -270.f, 600, 10, 270.f);
 	MakePlatform(fileName, 150.f, -160.f, 200, 10, 0.f);
-	MakePlatform(fileName, 250.f, -220.f, 10, 130, 0.f); 
+	MakePlatform(fileName, 250.f, -220.f, 10, 130, 0.f);
 	MakePlatform(fileName, 200.f, -280.f, 100, 10, 0.f);
 	MakePlatform(fileName, 180.f, -340.f, 80, 10, 0.f);
 	MakePlatform(fileName, 170.f, -370.f, 60, 10, 90.f);
@@ -108,27 +111,20 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 210.f, -400.f, 90, 10, 0.f);
 	MakePlatform(fileName, 250.f, -370.f, 10, 70, 0.f);
 	MakePlatform(fileName, 250.f, -390.f, 10, 60, 0.f);
-	MakePlatform(fileName, 250.f, -520.f, 10, 90, 0.f); 
+	MakePlatform(fileName, 250.f, -520.f, 10, 90, 0.f);
 	MakePlatform(fileName, 450.f, -440.f, 225, 10, 0.f);
 	MakePlatform(fileName, 360.f, -60.f, 10, 400, 0.f);
 	MakePlatform(fileName, 405.f, 140.f, 100, 10, 0.f);
 	MakePlatform(fileName, 455.f, 100.f, 10, 90, 0.f);
 	MakePlatform(fileName, 505.f, 100.f, 100, 10, 0.f);
 	MakePlatform(fileName, 605.f, 140.f, 100, 10, 0.f);
-	MakePlatform(fileName, 555.f, 100.f, 10, 90, 0.f); 
+	MakePlatform(fileName, 555.f, 100.f, 10, 90, 0.f);
 	MakePlatform(fileName, 655.f, 75.f, 10, 140, 0.f);
 	MakePlatform(fileName, 576.2f, -80.f, 250, 10, 50.f);
 	MakePlatform(fileName, 497.f, -218.f, 10, 90, 0.f);
 	MakePlatform(fileName, 430.f, -40.f, 150, 10, 0.f);
 	MakePlatform(fileName, 700.f, 180.f, 185, 10, 0.f);
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
-
-	// enemy spawn
-	{
-		std::string filename = "";
-		activeEnemies.push_back(Scene::CreateEnemy(filename, 0, 0, 0, 0, 0));
-	}
-
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 	ECS::GetComponent<VerticalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
 }
@@ -137,6 +133,9 @@ void PhysicsPlayground::Update()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
 	Scene::AdjustScrollOffset();
+
+
+	std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 
@@ -148,7 +147,7 @@ void PhysicsPlayground::Update()
 			activeEnemies.erase(activeEnemies.begin() + x);
 		}
 	}
-	
+
 	for (int i = 0; i < bulletStorage.size(); i++)
 	{
 		if (ECS::GetComponent<BulletCollide>(bulletStorage[i]).collided == true)
@@ -158,62 +157,8 @@ void PhysicsPlayground::Update()
 		}
 	}
 
-	if (weapon == 1)
-	{
-		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout1, 20, 20, false);
-	}
-	
-	if (weapon == 2)
-	{
-		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout2, 20, 20, false);
-	}
 
-	if (weapon == 3)
-	{
-		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout3, 20, 20, false);
-	}
-
-	if (weapon == 4)
-	{
-		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(loadout4, 20, 20, false);
-	}
 }
-
-
-void PhysicsPlayground::KeyboardHold()
-{
-	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
-
-
-	if (Input::GetKey(Key::W))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
-		player.SetRotationAngleDeg(90.f);
-		dashDirection = 1;
-	}
-
-	if (Input::GetKey(Key::A))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
-		player.SetRotationAngleDeg(180.f);
-		dashDirection = 2;
-	}
-
-	if (Input::GetKey(Key::S))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
-		player.SetRotationAngleDeg(270.f);
-		dashDirection = 3;
-	}
-
-	if (Input::GetKey(Key::D))
-	{
-		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
-		player.SetRotationAngleDeg(0.f);
-		dashDirection = 4;
-	}
-}
-
 void PhysicsPlayground::KeyboardDown()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
@@ -311,38 +256,48 @@ void PhysicsPlayground::KeyboardDown()
 	{
 		weapon = 3;
 	}
-
 	if (Input::GetKeyDown(Key::L))
 	{
 		weapon = 4;
 	}
 
-	if (Input::GetKeyDown(Key::Q)) 
+}
+
+void PhysicsPlayground::KeyboardHold()
+{
+	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
+
+
+	if (Input::GetKey(Key::W))
 	{
-		switch (dashDirection)
-		{
-		case 1:
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 300000.f), true);
-			break;
+		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
+		player.SetRotationAngleDeg(90.f);
+	}
 
-		case 2:
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(-300000.f, 0.f), true);
-			break;
+	if (Input::GetKey(Key::A))
+	{
+		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
+		player.SetRotationAngleDeg(180.f);
+	}
 
-		case 3:
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -300000), true);
-			break;
+	if (Input::GetKey(Key::S))
+	{
+		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
+		player.SetRotationAngleDeg(270.f);
+	}
 
-		case 4:
-			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(300000.f, 0.f), true);
-			break;
-		}
+	if (Input::GetKey(Key::D))
+	{
+		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
+		player.SetRotationAngleDeg(0.f);
 	}
 }
 
+
+
 void PhysicsPlayground::KeyboardUp()
 {
-	
+
 
 }
 
@@ -357,13 +312,13 @@ void PhysicsPlayground::Track()
 		float length = (sqrt((total.x * total.x) + (total.y * total.y)));
 		vec2 normal = vec2(total.x / length, total.y / length);
 
-		for(int x = 0; x < 50; x++)
+		for (int x = 0; x < 50; x++)
 		{
 			if (player.GetPosition().x + x == enemy.GetPosition().x || player.GetPosition().y + x == enemy.GetPosition().y)
 			{
 				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
 			}
-			
+
 			if (player.GetPosition().x - x == enemy.GetPosition().x || player.GetPosition().y - x == enemy.GetPosition().y)
 			{
 				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
@@ -419,7 +374,6 @@ void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y,
 	tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 	tempPhsBody.SetRotationAngleDeg(rotation);
 }
-
 
 
 
