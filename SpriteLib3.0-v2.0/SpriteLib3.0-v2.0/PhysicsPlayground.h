@@ -37,6 +37,7 @@ protected:
 	int ammoEntity = -1;
 	int bulletEntity = -1;
 	int weapon = 1;
+	int dashDirection;
 
 	std::string loadout1 = "Front.png";
 	std::string loadout2 = "Front.png";

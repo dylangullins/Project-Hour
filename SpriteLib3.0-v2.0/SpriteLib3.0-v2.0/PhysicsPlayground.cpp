@@ -193,24 +193,28 @@ void PhysicsPlayground::KeyboardHold()
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
 		player.SetRotationAngleDeg(90.f);
+		dashDirection = 1;
 	}
 
 	if (Input::GetKey(Key::A))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
 		player.SetRotationAngleDeg(180.f);
+		dashDirection = 2;
 	}
 
 	if (Input::GetKey(Key::S))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
 		player.SetRotationAngleDeg(270.f);
+		dashDirection = 3;
 	}
 
 	if (Input::GetKey(Key::D))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
 		player.SetRotationAngleDeg(0.f);
+		dashDirection = 4;
 	}
 }
 
@@ -315,6 +319,28 @@ void PhysicsPlayground::KeyboardDown()
 	if (Input::GetKeyDown(Key::L))
 	{
 		weapon = 4;
+	}
+
+	if (Input::GetKeyDown(Key::Q)) 
+	{
+		switch (dashDirection)
+		{
+		case 1:
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, 300000.f), true);
+			break;
+
+		case 2:
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(-300000.f, 0.f), true);
+			break;
+
+		case 3:
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(0.f, -300000), true);
+			break;
+
+		case 4:
+			player.GetBody()->ApplyLinearImpulseToCenter(b2Vec2(300000.f, 0.f), true);
+			break;
+		}
 	}
 }
 
