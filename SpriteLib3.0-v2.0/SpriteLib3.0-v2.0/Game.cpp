@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <random>
+#include "PhysicsPlayground.cpp"
 
 
 Game::~Game()
@@ -274,6 +275,11 @@ void Game::MouseClick(SDL_MouseButtonEvent evnt)
 
 	//Resets the enabled flag
 	m_click = false;
+
+	/*if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	{
+		PhysicsPlayground::MakePlatform("boxSprite,jpg", evnt.x, evnt.y, 150, 10, 0);
+	}*/
 }
 
 void Game::MouseWheel(SDL_MouseWheelEvent evnt)
@@ -288,4 +294,6 @@ void Game::MouseWheel(SDL_MouseWheelEvent evnt)
 	}
 	//Resets the enabled flag
 	m_wheel = false;
+
+
 }
