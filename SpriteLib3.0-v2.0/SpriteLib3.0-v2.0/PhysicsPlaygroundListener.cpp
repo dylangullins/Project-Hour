@@ -1,6 +1,8 @@
 #include "PhysicsPlaygroundListener.h"
 
 #include "ECS.h"
+#include "HP.h"
+#include "BulletCollide.h"
 
 PhysicsPlaygroundListener::PhysicsPlaygroundListener()
 	: b2ContactListener()
@@ -41,6 +43,30 @@ void PhysicsPlaygroundListener::BeginContact(b2Contact* contact)
 		else if (filterB.categoryBits == PLAYER)
 		{
 			ECS::GetComponent<CanJump>((int)fixtureB->GetBody()->GetUserData()).m_canJump = true;
+		}
+	}
+
+	//Bullet and enemy contact
+	if (filterA.categoryBits == FRIENDLY || filterB.categoryBits == FRIENDLY)
+	{
+		if (filterA.categoryBits == ENEMY)
+		{
+			ECS::GetComponent<HP>((int)fixtureA->GetBody()->GetUserData()).hp -= 10;
+			ECS::GetComponent<BulletCollide>((int)fixtureB->GetBody()->GetUserData()).collided = true;
+
+		}
+		else if (filterB.categoryBits == ENEMY)
+		{
+			ECS::GetComponent<HP>((int)fixtureB->GetBody()->GetUserData()).hp -= 10;
+			ECS::GetComponent<BulletCollide>((int)fixtureA->GetBody()->GetUserData()).collided = true;
+		}
+		else if (filterA.categoryBits == GROUND)
+		{
+			ECS::GetComponent<BulletCollide>((int)fixtureB->GetBody()->GetUserData()).collided = true;
+		}
+		else if (filterB.categoryBits == GROUND)
+		{
+			ECS::GetComponent<BulletCollide>((int)fixtureA->GetBody()->GetUserData()).collided = true;
 		}
 	}
 

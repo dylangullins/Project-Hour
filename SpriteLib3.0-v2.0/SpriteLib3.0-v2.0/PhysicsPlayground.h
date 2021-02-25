@@ -23,6 +23,7 @@ public:
 
 	std::vector<int> bulletStorage;
 	std::vector<int> activeEnemies;
+	std::vector<int> activebullets;
 
 protected:
 	bool m_firstWindow = false;
