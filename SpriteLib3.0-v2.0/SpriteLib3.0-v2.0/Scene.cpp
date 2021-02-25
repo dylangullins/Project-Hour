@@ -6,6 +6,7 @@
 #include <vector>
 #include "BulletCollide.h"
 #include "HP.h"
+#include "PhysicsPlayground.h"
 
 Scene::Scene(std::string name)
 {

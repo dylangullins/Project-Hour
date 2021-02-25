@@ -44,4 +44,9 @@ protected:
 	std::string loadout2 = "Front.png";
 	std::string loadout3 = "Front.png";
 	std::string loadout4 = "Front.png";
+
+	std::string enemy1 = "enemy1.png";//cowboy
+	std::string enemy2 = "enemy2.png";//knight
+	std::string enemy3 = "enemy3.png";//male
+	std::string enemy4 = "enemy4.png";//female
 };
