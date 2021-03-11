@@ -185,7 +185,7 @@ unsigned Scene::CreateBullet(float posX, float posY)
 	return entity;
 }
 
-unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation)
+unsigned Scene::CreateEnemy(std::string fileName, int X, int Y, float fX, float fY, float rotation)
 {
 	auto entity = ECS::CreateEntity();
 
@@ -196,11 +196,10 @@ unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, 
 	ECS::AttachComponent<HP>(entity);
 
 	//Sets up the components
-	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 50, 50);
+	ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, X, Y);
 	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-	ECS::GetComponent<Transform>(entity).SetPosition(vec3(X, Y, 3.f));
-	ECS::GetComponent<HP>(entity).hp = 50;
-
+	ECS::GetComponent<Transform>(entity).SetPosition(vec3(fX, fY, 3.f));
+	ECS::GetComponent<HP>(entity).hp = 50 + 10 * (rand() % 5 - 2);
 
 	auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 	auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -208,11 +207,11 @@ unsigned Scene::CreateEnemy(std::string fileName, float32 x, float32 y, int fx, 
 	b2Body* tempBody;
 	b2BodyDef tempDef;
 	tempDef.type = b2_dynamicBody;
-	tempDef.position.Set(float32(X), float32(Y));
+	tempDef.position.Set(float32(fX), float32(fY));
 
 	tempBody = m_physicsWorld->CreateBody(&tempDef);
 
-	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth()), vec2(0.f, 0.f), false,
+	tempPhsBody = PhysicsBody(entity, tempBody, float(tempSpr.GetWidth()- tempSpr.GetHeight()), vec2(0.f, 0.f), false,
 		ENEMY, PLAYER | OBJECTS | GROUND | ENVIRONMENT, 0.5f, 1.2f); //circle body
 
 	tempPhsBody.SetColor(vec4(1.f, 0.f, 1.f, 0.3f));

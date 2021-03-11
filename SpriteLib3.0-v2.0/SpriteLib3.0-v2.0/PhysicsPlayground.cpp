@@ -72,7 +72,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		b2Body* tempBody;
 		b2BodyDef tempDef;
 		tempDef.type = b2_dynamicBody;
-		tempDef.position.Set(float32(0.f), float32(0.f));
+		tempDef.position.Set(float32(10.f), float32(10.f));
 
 		tempBody = m_physicsWorld->CreateBody(&tempDef);
 
@@ -127,7 +127,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
 
 	{// enemy spawner
-		activeEnemies.push_back(Scene::CreateEnemy());
+		activeEnemies.push_back(Scene::CreateEnemy(enemy1, 20.f, 20.f, 50.f, 50.f, 0.f));
 	}
 
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
@@ -162,8 +162,10 @@ void PhysicsPlayground::Update()
 		}
 	}
 
-
+	Track();
 }
+
+
 void PhysicsPlayground::KeyboardDown()
 {
 	auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());

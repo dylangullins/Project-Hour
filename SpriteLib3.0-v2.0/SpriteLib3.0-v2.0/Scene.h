@@ -41,8 +41,8 @@ public:
 	virtual void KeyboardHold() { };
 	virtual void KeyboardDown() { };
 	virtual void KeyboardUp() { };
-	unsigned CreateBullet(float posX, float posY);
-	unsigned CreateEnemy(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation);
+	unsigned CreateBullet(float X, float Y);
+	unsigned CreateEnemy(std::string fileName, int X, int Y, float fX, float fY, float rotation);
 
 	//Mouse Input
 	//Because these are virtual you can override them in your inherited classes.
