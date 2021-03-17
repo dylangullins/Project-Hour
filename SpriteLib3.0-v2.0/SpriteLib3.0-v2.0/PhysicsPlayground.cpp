@@ -127,6 +127,10 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
 
 	{// enemy spawner
+		std::string enemy1 = "hexagon.png";//cowboy
+		std::string enemy2 = "enemy2.png";//knight
+		std::string enemy3 = "enemy3.png";//male
+		std::string enemy4 = "enemy4.png";//female
 		activeEnemies.push_back(Scene::CreateEnemy(enemy1, 20.f, 20.f, 50.f, 50.f, 0.f));
 	}
 
@@ -140,7 +144,7 @@ void PhysicsPlayground::Update()
 	Scene::AdjustScrollOffset();
 
 
-	std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
+	//std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 
@@ -178,7 +182,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 -= 1;
 			}
@@ -189,7 +193,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 -= 1;
 			}
@@ -200,7 +204,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 -= 1;
 			}
@@ -210,7 +214,7 @@ void PhysicsPlayground::KeyboardDown()
 		case 4:
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 -= 1;
 			}
@@ -332,7 +336,7 @@ void PhysicsPlayground::Track()
 			}
 		}
 
-		b2Vec2 defaultVector = b2Vec2(1, 0);//0 degrees
+		b2Vec2 defaultVector = b2Vec2(1.f, 0.f);//0 degrees
 
 		b2Vec2 playerPos = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer()).GetPosition();
 		b2Vec2 enemyPos = ECS::GetComponent<PhysicsBody>(activeEnemies[i]).GetPosition();

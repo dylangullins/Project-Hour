@@ -41,7 +41,7 @@ public:
 	virtual void KeyboardHold() { };
 	virtual void KeyboardDown() { };
 	virtual void KeyboardUp() { };
-	unsigned CreateBullet(float X, float Y);
+	unsigned CreateBullet(float X, float Y, int weapon);
 	unsigned CreateEnemy(std::string fileName, int X, int Y, float fX, float fY, float rotation);
 
 	//Mouse Input
