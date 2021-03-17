@@ -83,6 +83,23 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetRotationAngleDeg(0.f);
 		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 	}
+
+	{
+		//Create Weapon
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsMainUI(entity, true);
+
+		 
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		std::string fileName = "Gat.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 10, 10);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 10.f));
+		ECS::GetComponent<Transform>(entity).SetRotationAngleZ(0);
+	}
+
 	/*
 	The Lab
 	*/
@@ -164,6 +181,35 @@ void PhysicsPlayground::Update()
 			PhysicsBody::m_bodiesToDelete.push_back(bulletStorage[i]);
 			bulletStorage.erase(bulletStorage.begin() + i);
 		}
+	}
+
+	
+	{
+		//auto& Gun = ECS::GetComponent<PhysicsBody>(MainEntities::MainUI());
+		std::string Revolver = "Revolver.png";//cowboy
+		std::string Gat = "Gat.png";//knight
+
+		ECS::GetComponent<Transform>(MainEntities::MainUI()).SetPosition(vec3(player.GetPosition().x + 10, player.GetPosition().y + 2, 10.f));
+
+		if (weapon == 1)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 10, 10, false);
+
+			//Gun.SetRotationAngleDeg(player.GetRotationAngleDeg());
+		}
+		else if (weapon == 2)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
+		}
+		else if (weapon == 3)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 10, 10, false);
+		}
+		else if (weapon == 4)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
+		}
+
 	}
 
 	Track();

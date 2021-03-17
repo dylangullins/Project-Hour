@@ -40,11 +40,6 @@ protected:
 	int weapon = 1;
 	int dashDirection;
 
-	std::string loadout1 = "Front.png";
-	std::string loadout2 = "Front.png";
-	std::string loadout3 = "Front.png";
-	std::string loadout4 = "Front.png";
-
 	std::string enemy1 = "enemy1.png";//cowboy
 	std::string enemy2 = "enemy2.png";//knight
 	std::string enemy3 = "enemy3.png";//male
