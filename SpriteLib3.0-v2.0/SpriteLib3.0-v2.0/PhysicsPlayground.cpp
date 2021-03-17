@@ -197,20 +197,21 @@ void PhysicsPlayground::Update()
 
 			//Gun.SetRotationAngleDeg(player.GetRotationAngleDeg());
 		}
-		else if (weapon == 2)
+		if (weapon == 2)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
 		}
-		else if (weapon == 3)
+		if (weapon == 3)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 10, 10, false);
 		}
-		else if (weapon == 4)
+		if (weapon == 4)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
 		}
 
 	}
+
 
 	Track();
 }
@@ -228,7 +229,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon, rotation);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 -= 1;
 			}
@@ -239,7 +240,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon, rotation);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 -= 1;
 			}
@@ -250,7 +251,7 @@ void PhysicsPlayground::KeyboardDown()
 
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon, rotation);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 -= 1;
 			}
@@ -258,9 +259,10 @@ void PhysicsPlayground::KeyboardDown()
 			break;
 
 		case 4:
+
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 > 0)
 			{
-				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon);
+				bulletEntity = Scene::CreateBullet(player.GetBody()->GetPosition().x, player.GetBody()->GetPosition().y, weapon, rotation);
 				bulletStorage.push_back(bulletEntity);
 				ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 -= 1;
 			}
@@ -328,25 +330,29 @@ void PhysicsPlayground::KeyboardHold()
 	if (Input::GetKey(Key::W))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
-		player.SetRotationAngleDeg(90.f);
+		//player.SetRotationAngleDeg(90.f);
+		rotation = 90;
 	}
 
 	if (Input::GetKey(Key::A))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
-		player.SetRotationAngleDeg(180.f);
+		//player.SetRotationAngleDeg(180.f);
+		rotation = 180;
 	}
 
 	if (Input::GetKey(Key::S))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
-		player.SetRotationAngleDeg(270.f);
+		//player.SetRotationAngleDeg(270.f);
+		rotation = 270;
 	}
 
 	if (Input::GetKey(Key::D))
 	{
 		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
-		player.SetRotationAngleDeg(0.f);
+		//player.SetRotationAngleDeg(0.f);
+		rotation = 0;
 	}
 }
 

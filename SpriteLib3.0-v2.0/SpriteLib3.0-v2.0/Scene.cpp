@@ -139,7 +139,7 @@ void Scene::GUI()
 
 }
 
-unsigned Scene::CreateBullet(float X, float Y, int weapon)
+unsigned Scene::CreateBullet(float X, float Y, int weapon, float rotation)
 {
 	auto entity = ECS::CreateEntity();
 	auto player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
@@ -156,7 +156,7 @@ unsigned Scene::CreateBullet(float X, float Y, int weapon)
 	ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 	ECS::GetComponent<Transform>(entity).SetPosition(vec3(X, Y, 22.f));
 
-	auto& fired = ECS::GetComponent<Sprite>(entity);
+	auto& bullet = ECS::GetComponent<Sprite>(entity);
 	auto& bulletPhsBody = ECS::GetComponent<PhysicsBody>(entity);
 
 	float shrinkX = 8.f;
@@ -168,19 +168,17 @@ unsigned Scene::CreateBullet(float X, float Y, int weapon)
 
 	if (weapon == 1)
 	{
-		float playerAngle = player.GetRotationAngleDeg() * (PI / 180);
-		vec2 initialDirection = vec2(0.f, 0.f);
-		mat2 rotationMatrix = mat2(vec2(cos(playerAngle), -sin(playerAngle)), vec2(sin(playerAngle), cos(playerAngle)));
+		float Angle = rotation * (PI / 180);
+
+		mat2 rotationMatrix = mat2(vec2(cos(Angle), -sin(Angle)), vec2(sin(Angle), cos(Angle)));
 		vec2 rotatedDirection = rotationMatrix.operator*(vec2(1.f, 0.f));
 		bulletDef.position.Set(X + rotatedDirection.x, Y + rotatedDirection.y);
 
 		bulletBody = m_physicsWorld->CreateBody(&bulletDef);
+		bulletPhsBody = PhysicsBody(entity, bulletBody, float(bullet.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
 
-		bulletPhsBody = PhysicsBody(entity, bulletBody, float(fired.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
+		bulletPhsBody.SetRotationAngleDeg(rotation);
 
-		bulletBody->SetFixedRotation(false);
-		bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
-		bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
 		bulletBody->ApplyLinearImpulseToCenter(b2Vec2(rotatedDirection.x * 5000, rotatedDirection.y * 5000), true);
 	}
 
@@ -193,55 +191,54 @@ unsigned Scene::CreateBullet(float X, float Y, int weapon)
 		bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
 		bulletBody->ApplyLinearImpulseToCenter(b2Vec2(X * 5000, Y * 5000), true);*/
 
-		float playerAngle = player.GetRotationAngleDeg() * (PI / 90);
-		vec2 initialDirection = vec2(0.f, 0.f);
+		float playerAngle = rotation * (PI / 90);
+
 		mat2 rotationMatrix = mat2(vec2(cos(playerAngle), -sin(playerAngle)), vec2(sin(playerAngle), cos(playerAngle)));
 		vec2 rotatedDirection = rotationMatrix.operator*(vec2(1.f, 0.f));
 		bulletDef.position.Set(X + rotatedDirection.x, Y + rotatedDirection.y);
 
 		bulletBody = m_physicsWorld->CreateBody(&bulletDef);
 
-		bulletPhsBody = PhysicsBody(entity, bulletBody, float(fired.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
+		bulletPhsBody = PhysicsBody(entity, bulletBody, float(bullet.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
 
-		bulletBody->SetFixedRotation(false);
 		bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
-		bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
+
 		bulletBody->ApplyLinearImpulseToCenter(b2Vec2(rotatedDirection.x * 5000, rotatedDirection.y * 5000), true);
 	}
 
 	if (weapon == 3)
 	{
-		float playerAngle = player.GetRotationAngleDeg() * (PI);
-		vec2 initialDirection = vec2(1.f, 1.f);
+		float playerAngle = rotation * (PI);
+
 		mat2 rotationMatrix = mat2(vec2(cos(playerAngle), -sin(playerAngle)), vec2(sin(playerAngle), cos(playerAngle)));
 		vec2 rotatedDirection = rotationMatrix.operator*(vec2(1.f, 0.f));
 		bulletDef.position.Set(X + rotatedDirection.x, Y + rotatedDirection.y);
 
 		bulletBody = m_physicsWorld->CreateBody(&bulletDef);
 
-		bulletPhsBody = PhysicsBody(entity, bulletBody, float(fired.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
+		bulletPhsBody = PhysicsBody(entity, bulletBody, float(bullet.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f);
 
-		bulletBody->SetFixedRotation(false);
-		bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
-		bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
+
+		bulletPhsBody.SetRotationAngleDeg(rotation);
+
 		bulletBody->ApplyLinearImpulseToCenter(b2Vec2(rotatedDirection.x * 5000, rotatedDirection.y * 5000), true);
 	}
 
 	if (weapon == 4)
 	{
-		float playerAngle = player.GetRotationAngleDeg() * (PI / 270);
-		vec2 initialDirection = vec2(1.f, 1.f);
+		float playerAngle = rotation * (PI / 270);
+		vec2 Start = vec2(1.f, 1.f);
 		mat2 rotationMatrix = mat2(vec2(cos(playerAngle), -sin(playerAngle)), vec2(sin(playerAngle), cos(playerAngle)));
 		vec2 rotatedDirection = rotationMatrix.operator*(vec2(1.f, 0.f));
 		bulletDef.position.Set(X + rotatedDirection.x, Y + rotatedDirection.y);
 
 		bulletBody = m_physicsWorld->CreateBody(&bulletDef);
 
-		bulletPhsBody = PhysicsBody(entity, bulletBody, float(fired.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f); 
+		bulletPhsBody = PhysicsBody(entity, bulletBody, float(bullet.GetWidth() - shrinkX), vec2(0.f, 0.f), false, FRIENDLY, ENEMY | OBJECTS | ENVIRONMENT, 0.f, 0.f); 
 
-		bulletBody->SetFixedRotation(false);
-		bulletPhsBody.SetRotationAngleDeg(player.GetRotationAngleDeg());
-		bulletPhsBody.SetColor(vec4(0.f, 1.f, 6.f, 0.3f));
+
+		bulletPhsBody.SetRotationAngleDeg(rotation);
+
 		bulletBody->ApplyLinearImpulseToCenter(b2Vec2(rotatedDirection.x * 5000, rotatedDirection.y * 5000), true);
 	}
 

@@ -39,6 +39,7 @@ protected:
 	int bulletEntity = -1;
 	int weapon = 1;
 	int dashDirection;
+	float rotation = 0;
 
 	std::string enemy1 = "enemy1.png";//cowboy
 	std::string enemy2 = "enemy2.png";//knight
