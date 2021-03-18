@@ -59,6 +59,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 
 		//set components
 		std::string fileName = "Front.png";
+
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
@@ -329,6 +330,9 @@ void PhysicsPlayground::KeyboardHold()
 
 	if (Input::GetKey(Key::W))
 	{
+		std::string enemy1 = "MichaelWalkUp.gif";//cowboy
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(enemy1, 20, 20, false);
+
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, 300000.f), true);
 		//player.SetRotationAngleDeg(90.f);
 		rotation = 90;
@@ -336,6 +340,8 @@ void PhysicsPlayground::KeyboardHold()
 
 	if (Input::GetKey(Key::A))
 	{
+		std::string enemy1 = "MichaelWalkLeft.gif";//cowboy
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(enemy1, 20, 20, false);
 		player.GetBody()->ApplyForceToCenter(b2Vec2(-300000.f, 0.f), true);
 		//player.SetRotationAngleDeg(180.f);
 		rotation = 180;
@@ -343,6 +349,8 @@ void PhysicsPlayground::KeyboardHold()
 
 	if (Input::GetKey(Key::S))
 	{
+		std::string enemy1 = "MichaelWalkDown.gif";//cowboy
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(enemy1, 20, 20, false);
 		player.GetBody()->ApplyForceToCenter(b2Vec2(0.f, -300000.f), true);
 		//player.SetRotationAngleDeg(270.f);
 		rotation = 270;
@@ -350,6 +358,8 @@ void PhysicsPlayground::KeyboardHold()
 
 	if (Input::GetKey(Key::D))
 	{
+		std::string enemy1 = "MichaelWalkRight.gif";//cowboy
+		ECS::GetComponent<Sprite>(MainEntities::MainPlayer()).LoadSprite(enemy1, 20, 20, false);
 		player.GetBody()->ApplyForceToCenter(b2Vec2(300000.f, 0.f), true);
 		//player.SetRotationAngleDeg(0.f);
 		rotation = 0;
