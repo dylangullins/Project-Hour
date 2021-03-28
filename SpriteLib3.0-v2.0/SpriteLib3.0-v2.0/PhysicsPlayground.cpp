@@ -145,11 +145,17 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
 
 	{// enemy spawner
-		std::string enemy1 = "hexagon.png";//cowboy
+		std::string enemy1 = "hexagon.gif";//cowboy
 		std::string enemy2 = "enemy2.png";//knight
-		std::string enemy3 = "enemy3.png";//male
-		std::string enemy4 = "enemy4.png";//female
-		activeEnemies.push_back(Scene::CreateEnemy(enemy1, 20.f, 20.f, 50.f, 50.f, 0.f));
+		std::string enemy3 = "ScientistEnemy.gif";//male
+		std::string enemy4 = "ScientistEnemy2.gif";//female
+		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 50.f, 50.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 60.f, 60.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 100.f, 100.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 120.f, 120.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 500.f, 500.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 200.f, -300.f, 0.f));
+
 	}
 
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
@@ -189,26 +195,28 @@ void PhysicsPlayground::Update()
 		//auto& Gun = ECS::GetComponent<PhysicsBody>(MainEntities::MainUI());
 		std::string Revolver = "Revolver.png";//cowboy
 		std::string Gat = "Gat.png";//knight
+		std::string LikeButton = "LikeButton.png";//knight
+		std::string BeachBall = "BeachBall.png";//knight
 
 		ECS::GetComponent<Transform>(MainEntities::MainUI()).SetPosition(vec3(player.GetPosition().x + 10, player.GetPosition().y + 2, 10.f));
 
 		if (weapon == 1)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 10, 10, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 20, 20, false);
 
 			//Gun.SetRotationAngleDeg(player.GetRotationAngleDeg());
 		}
 		if (weapon == 2)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 20, 20, false);
 		}
 		if (weapon == 3)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 10, 10, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(LikeButton, 20, 20, false);
 		}
 		if (weapon == 4)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 10, 10, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(BeachBall, 20, 20, false);
 		}
 
 	}
