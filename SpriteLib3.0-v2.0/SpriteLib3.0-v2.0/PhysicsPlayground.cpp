@@ -97,8 +97,23 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		std::string fileName = "Gat.png";
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 10, 10);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 10.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
 		ECS::GetComponent<Transform>(entity).SetRotationAngleZ(0);
+	}
+
+	{//Create background
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsBackgroundUI(entity, true);
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "Labwall.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 1.f));
 	}
 
 	/*
@@ -168,7 +183,7 @@ void PhysicsPlayground::Update()
 	Scene::AdjustScrollOffset();
 
 
-	//std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
+	std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 
@@ -198,7 +213,7 @@ void PhysicsPlayground::Update()
 		std::string LikeButton = "LikeButton.png";//knight
 		std::string BeachBall = "BeachBall.png";//knight
 
-		ECS::GetComponent<Transform>(MainEntities::MainUI()).SetPosition(vec3(player.GetPosition().x + 10, player.GetPosition().y + 2, 10.f));
+		ECS::GetComponent<Transform>(MainEntities::MainUI()).SetPosition(vec3(player.GetPosition().x + 10, player.GetPosition().y + 2, 2.f));
 
 		if (weapon == 1)
 		{
@@ -221,6 +236,36 @@ void PhysicsPlayground::Update()
 
 	}
 
+	{//background UI change
+
+		std::string background1 = "Labwall.png";//cowboy
+		std::string background2 = "Gat.png";//knight
+		std::string background3 = "LikeButton.png";//knight
+		std::string background4 = "BeachBall.png";//knight
+
+		ECS::GetComponent<Transform>(MainEntities::BackgroundUI()).SetPosition(vec3(player.GetPosition().x, player.GetPosition().y, 0.f));
+
+		if (player.GetPosition().x <= 500 && player.GetPosition().x >= 0)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background1, 1000, 1000, false);
+		}
+
+		if (player.GetPosition().x <= 1000 && player.GetPosition().x >= 500)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background2, 1000, 1000, false);
+		}
+
+		if (player.GetPosition().x <= 1500 && player.GetPosition().x >= 1000)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background3, 1000, 1000, false);
+		}
+
+		if (player.GetPosition().x <= 2000 && player.GetPosition().x >= 1500)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background4, 1000, 1000, false);
+		}
+
+	}
 
 	Track();
 }

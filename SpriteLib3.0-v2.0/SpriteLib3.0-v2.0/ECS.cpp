@@ -55,3 +55,11 @@ void ECS::SetIsMainUI(unsigned entity, bool mainUI)
 		MainEntities::MainUI(entity);
 	}
 }
+
+void ECS::SetIsBackgroundUI(unsigned entity, bool mainUI)
+{
+	if (mainUI)
+	{
+		MainEntities::BackgroundUI(entity);
+	}
+}
