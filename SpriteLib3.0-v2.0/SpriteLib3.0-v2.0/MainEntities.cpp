@@ -4,6 +4,8 @@ int MainEntities::m_mainCamera = 0;
 int MainEntities::m_mainPlayer = 0;
 int MainEntities::m_mainUI = 0;
 int MainEntities::m_backgroundUI = 0;
+int MainEntities::m_healthUI = 0;
+int MainEntities::m_ammoUI = 0;
 
 int MainEntities::MainCamera()
 {
@@ -25,6 +27,16 @@ int MainEntities::BackgroundUI()
 	return m_backgroundUI;
 }
 
+int MainEntities::HealthUI()
+{
+	return m_healthUI;
+}
+
+int MainEntities::AmmoUI()
+{
+	return m_ammoUI;
+}
+
 void MainEntities::MainCamera(int main)
 {
 	m_mainCamera = main;
@@ -43,4 +55,14 @@ void MainEntities::MainUI(int main)
 void MainEntities::BackgroundUI(int main)
 {
 	m_backgroundUI = main;
+}
+
+void MainEntities::HealthUI(int main)
+{
+	m_healthUI = main;
+}
+
+void MainEntities::AmmoUI(int main)
+{
+	m_ammoUI = main;
 }

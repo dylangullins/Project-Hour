@@ -54,6 +54,8 @@ public:
 	static void SetIsMainPlayer(unsigned entity, bool mainPlayer);
 	static void SetIsMainUI(unsigned entity, bool mainUI);
 	static void SetIsBackgroundUI(unsigned entity, bool backgroundUI);
+	static void SetIsHealthUI(unsigned entity, bool healthUI);
+	static void SetIsAmmoUI(unsigned entity, bool ammoUI);
 
 	static entt::registry* m_reg;
 };

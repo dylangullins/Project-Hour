@@ -56,6 +56,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 		ECS::AttachComponent<PhysicsBody>(entity);
 		ECS::AttachComponent<Ammo>(entity);
+		ECS::AttachComponent<HP>(entity);
 
 		//set components
 		std::string fileName = "Front.png";
@@ -63,7 +64,6 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
-
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
@@ -85,15 +85,15 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		tempPhsBody.SetColor(vec4(0.f, 1.f, 0.f, 0.3f));
 	}
 
-	{
-		//Create Weapon
+	{//Create Weapon
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainUI(entity, true);
 
-		 
+		//Add components
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
+		//set components
 		std::string fileName = "Gat.png";
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 10, 10);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
@@ -114,6 +114,36 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 1.f));
+	}
+
+	{//Create healthbar
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsHealthUI(entity, true);
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "hexagon.gif";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
+	}
+
+	{//Create Ammo bar
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsHealthUI(entity, true);
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "hexagon.gif";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
 	}
 
 	/*
@@ -221,14 +251,17 @@ void PhysicsPlayground::Update()
 
 			//Gun.SetRotationAngleDeg(player.GetRotationAngleDeg());
 		}
+
 		if (weapon == 2)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 20, 20, false);
 		}
+
 		if (weapon == 3)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(LikeButton, 20, 20, false);
 		}
+
 		if (weapon == 4)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(BeachBall, 20, 20, false);
@@ -265,6 +298,171 @@ void PhysicsPlayground::Update()
 			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background4, 1000, 1000, false);
 		}
 
+	}
+
+	{//Health bar UI 
+
+		std::string Hp5 = "LikeButton.png";//Max hp
+		std::string Hp4 = "Gat.png";//Near Max hp
+		std::string Hp3 = "LikeButton.png";//Half hp
+		std::string Hp2 = "BeachBall.png";//near low hp
+		std::string Hp1 = "ScientistEnemy.gif";//Low hp
+		std::string Hp0 = "hexagon.gif";//Dead
+
+		ECS::GetComponent<Transform>(MainEntities::HealthUI()).SetPosition(vec3(player.GetPosition().x - 80.f, player.GetPosition().y + 75.f, 50.f));
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp = 50)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp5, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 50 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 40)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp4, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 40 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 40)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp3, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 30 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 20)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp2, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 20 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 10)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp1, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 10 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 0)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp0, 90, 30, false);
+		}
+	}
+
+	{//weapon UI
+
+		std::string Ammo0 = "LikeButton.png";//Empty
+		std::string Ammo1 = "hexagon.gif";//Near empty
+		std::string Ammo2 = "Gat.png";//Half ammo
+		std::string Ammo3 = "LikeButton.png";//Full ammo
+
+		//ECS::GetComponent<Transform>(MainEntities::AmmoUI()).SetPosition(vec3(player.GetPosition().x + 50, player.GetPosition().y - 50, 50.f));
+
+		ECS::GetComponent<Transform>(MainEntities::AmmoUI()).SetPosition(vec3(player.GetPosition().x - 198, player.GetPosition().y + 100, 40.f));
+
+		if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 10)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 15, 120, false);
+		}
+		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 20)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 15, 120, false);
+		}
+		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 30)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 15, 120, false);
+		}
+		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 40)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 15, 120, false);
+		}
+	
+
+
+		/*if (weapon == 1)
+		{
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 = 30)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 30 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 >= 15)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 15 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 >= 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 = 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 90, 30, false);
+			}
+		}
+
+		if (weapon == 2)
+		{
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 = 10)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 < 10 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 >= 5)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 < 5 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 >= 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo2 = 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 90, 30, false);
+			}
+		}
+
+		if (weapon == 3)
+		{
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 = 20)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 < 20 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 >= 10)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 < 10 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 >= 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo3 < 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 90, 30, false);
+			}
+		}
+
+		if (weapon == 4)
+		{
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 = 5)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 < 5 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 >= 2)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 < 2 && ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 >= 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 90, 30, false);
+			}
+
+			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo4 = 0)
+			{
+				ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 90, 30, false);
+			}
+		}*/
 	}
 
 	Track();

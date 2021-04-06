@@ -9,18 +9,24 @@ public:
 	static int MainPlayer();
 	static int MainUI();
 	static int BackgroundUI();
+	static int HealthUI();
+	static int AmmoUI();
 
 	//Setters
 	static void MainCamera(int main);
 	static void MainPlayer(int main);
 	static void MainUI(int main);
 	static void BackgroundUI(int main);
+	static void HealthUI(int main);
+	static void AmmoUI(int main);
 
 private:
 	static int m_mainCamera;
 	static int m_mainPlayer;
 	static int m_mainUI;
 	static int m_backgroundUI;
+	static int m_healthUI;
+	static int m_ammoUI;
 };
 
 #endif // !__MAINENTITIES_H__

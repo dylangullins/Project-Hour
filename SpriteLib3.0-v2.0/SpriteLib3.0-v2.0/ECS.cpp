@@ -56,10 +56,26 @@ void ECS::SetIsMainUI(unsigned entity, bool mainUI)
 	}
 }
 
-void ECS::SetIsBackgroundUI(unsigned entity, bool mainUI)
+void ECS::SetIsBackgroundUI(unsigned entity, bool backgroundUI)
 {
-	if (mainUI)
+	if (backgroundUI)
 	{
 		MainEntities::BackgroundUI(entity);
+	}
+}
+
+void ECS::SetIsHealthUI(unsigned entity, bool healthUI)
+{
+	if (healthUI)
+	{
+		MainEntities::HealthUI(entity);
+	}
+}
+
+void ECS::SetIsAmmoUI(unsigned entity, bool ammoUI)
+{
+	if (ammoUI)
+	{
+		MainEntities::AmmoUI(entity);
 	}
 }
