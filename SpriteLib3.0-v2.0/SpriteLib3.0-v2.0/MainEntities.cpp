@@ -6,6 +6,7 @@ int MainEntities::m_mainUI = 0;
 int MainEntities::m_backgroundUI = 0;
 int MainEntities::m_healthUI = 0;
 int MainEntities::m_ammoUI = 0;
+int MainEntities::m_tutorial = 0;
 
 int MainEntities::MainCamera()
 {
@@ -37,6 +38,11 @@ int MainEntities::AmmoUI()
 	return m_ammoUI;
 }
 
+int MainEntities::Tutorial()
+{
+	return m_tutorial;
+}
+
 void MainEntities::MainCamera(int main)
 {
 	m_mainCamera = main;
@@ -65,4 +71,9 @@ void MainEntities::HealthUI(int main)
 void MainEntities::AmmoUI(int main)
 {
 	m_ammoUI = main;
+}
+
+void MainEntities::Tutorial(int main)
+{
+	m_tutorial = main;
 }

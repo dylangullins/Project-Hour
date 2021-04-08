@@ -146,6 +146,21 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
 	}
 
+	{//Create tutorial
+		auto entity = ECS::CreateEntity();
+		ECS::SetIsTutorial(entity, true);
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "LikeButton.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 25);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(20.f, 20.f, 1.f));
+	}
+
 	/*
 	The Lab
 	*/
@@ -351,27 +366,6 @@ void PhysicsPlayground::Update()
 
 		//ECS::GetComponent<Transform>(MainEntities::AmmoUI()).SetPosition(vec3(player.GetPosition().x + 50, player.GetPosition().y - 50, 50.f));
 
-		ECS::GetComponent<Transform>(MainEntities::AmmoUI()).SetPosition(vec3(player.GetPosition().x - 198, player.GetPosition().y + 100, 40.f));
-
-		if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 10)
-		{
-			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo0, 15, 120, false);
-		}
-		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 20)
-		{
-			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo1, 15, 120, false);
-		}
-		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 30)
-		{
-			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo2, 15, 120, false);
-		}
-		else if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 < 40)
-		{
-			ECS::GetComponent<Sprite>(MainEntities::AmmoUI()).LoadSprite(Ammo3, 15, 120, false);
-		}
-	
-
-
 		/*if (weapon == 1)
 		{
 			if (ECS::GetComponent<Ammo>(MainEntities::MainPlayer()).ammo1 = 30)
@@ -464,6 +458,37 @@ void PhysicsPlayground::Update()
 			}
 		}*/
 	}
+
+	{//tutorial change 
+
+		std::string tut1 = "LikeButton.png";//weapon 1 tutorial
+		std::string tut2 = "Gat.png";//weapon 2 tutorial
+		std::string tut3 = "LikeButton.png";//weapon 3 tutorial
+		std::string tut4 = "BeachBall.png";//weapon 4 tutorial
+
+		ECS::GetComponent<Transform>(MainEntities::Tutorial()).SetPosition(vec3(20.f, 20.f, 1.f));
+
+		if (weapon == 1)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut1, 25, 25, false);
+		}
+
+		if (weapon == 2)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut2, 25, 25, false);
+		}
+
+		if (weapon == 3)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut3, 25, 25, false);
+		}
+
+		if (weapon == 4)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut4, 25, 25, false);
+		}
+	}
+
 
 	Track();
 }

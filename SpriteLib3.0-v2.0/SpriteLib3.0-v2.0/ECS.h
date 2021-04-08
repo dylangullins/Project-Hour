@@ -56,6 +56,7 @@ public:
 	static void SetIsBackgroundUI(unsigned entity, bool backgroundUI);
 	static void SetIsHealthUI(unsigned entity, bool healthUI);
 	static void SetIsAmmoUI(unsigned entity, bool ammoUI);
+	static void SetIsTutorial(unsigned entity, bool tutorial);
 
 	static entt::registry* m_reg;
 };

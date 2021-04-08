@@ -79,3 +79,11 @@ void ECS::SetIsAmmoUI(unsigned entity, bool ammoUI)
 		MainEntities::AmmoUI(entity);
 	}
 }
+
+void ECS::SetIsTutorial(unsigned entity, bool tutorial)
+{
+	if (tutorial)
+	{
+		MainEntities::Tutorial(entity);
+	}
+}

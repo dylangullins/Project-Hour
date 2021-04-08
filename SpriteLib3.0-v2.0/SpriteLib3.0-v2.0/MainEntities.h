@@ -11,6 +11,7 @@ public:
 	static int BackgroundUI();
 	static int HealthUI();
 	static int AmmoUI();
+	static int Tutorial();
 
 	//Setters
 	static void MainCamera(int main);
@@ -19,6 +20,7 @@ public:
 	static void BackgroundUI(int main);
 	static void HealthUI(int main);
 	static void AmmoUI(int main);
+	static void Tutorial(int main);
 
 private:
 	static int m_mainCamera;
@@ -27,6 +29,7 @@ private:
 	static int m_backgroundUI;
 	static int m_healthUI;
 	static int m_ammoUI;
+	static int m_tutorial;
 };
 
 #endif // !__MAINENTITIES_H__
