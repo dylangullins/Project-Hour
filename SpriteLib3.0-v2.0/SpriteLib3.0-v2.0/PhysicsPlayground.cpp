@@ -459,7 +459,7 @@ void PhysicsPlayground::Update()
 		}*/
 	}
 
-		{//tutorial change 
+	{//tutorial change 
 
 		std::string tut1 = "LikeButton.png";//weapon 1 tutorial
 		std::string tut2 = "Gat.png";//weapon 2 tutorial
@@ -493,6 +493,30 @@ void PhysicsPlayground::Update()
 		{
 			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut4, 25, 25, false);
 			
+		}
+	}
+
+	{// tp player when they get to next level
+
+		if (player.GetPosition().x >= 500 && player.GetPosition().x <= 510)
+		{
+			player.SetPosition(b2Vec2(550.f, 500.f));
+		}
+
+		if (player.GetPosition().x >= 1000 && player.GetPosition().x <= 1010)
+		{
+			player.SetPosition(b2Vec2(1050.f, 500.f));
+			
+		}
+
+		if (player.GetPosition().x >= 1500 && player.GetPosition().x <= 1510)
+		{
+			player.SetPosition(b2Vec2(1550.f, 500.f));
+		}
+
+		if (player.GetPosition().x >= 2000 && player.GetPosition().x <= 2010)
+		{
+			player.SetPosition(b2Vec2(2050.f, 500.f));
 		}
 	}
 
