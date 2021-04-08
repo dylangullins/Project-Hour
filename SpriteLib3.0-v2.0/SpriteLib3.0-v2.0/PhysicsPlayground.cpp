@@ -131,7 +131,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
 	}
 
-	{//Create Ammo bar
+	/*{//Create Ammo bar
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsHealthUI(entity, true);
 
@@ -144,7 +144,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
-	}
+	}*/
 
 	{//Create tutorial
 		auto entity = ECS::CreateEntity();
@@ -459,36 +459,42 @@ void PhysicsPlayground::Update()
 		}*/
 	}
 
-	{//tutorial change 
+		{//tutorial change 
 
 		std::string tut1 = "LikeButton.png";//weapon 1 tutorial
 		std::string tut2 = "Gat.png";//weapon 2 tutorial
 		std::string tut3 = "LikeButton.png";//weapon 3 tutorial
 		std::string tut4 = "BeachBall.png";//weapon 4 tutorial
+		std::string tut5 = "LikeButton.png";//weapon 4 tutorial
+		std::string tut6 = "Gat.png";//weapon 4 tutorial
+
 
 		ECS::GetComponent<Transform>(MainEntities::Tutorial()).SetPosition(vec3(20.f, 20.f, 1.f));
 
-		if (weapon == 1)
+		if (Input::GetKey(Key::U))
 		{
 			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut1, 25, 25, false);
+		
 		}
 
-		if (weapon == 2)
+		if (Input::GetKey(Key::I))
 		{
 			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut2, 25, 25, false);
+		
 		}
 
-		if (weapon == 3)
+		if (Input::GetKey(Key::O))
 		{
 			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut3, 25, 25, false);
+			
 		}
 
-		if (weapon == 4)
+		if (Input::GetKey(Key::J))
 		{
 			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut4, 25, 25, false);
+			
 		}
 	}
-
 
 	Track();
 }
@@ -578,25 +584,25 @@ void PhysicsPlayground::KeyboardDown()
 		}
 	}
 
-	if (Input::GetKeyDown(Key::U))
+	if (Input::GetKeyDown(Key::One))
 	{
 		weapon = 1;
 	}
 
-	if (Input::GetKeyDown(Key::I))
+	if (Input::GetKeyDown(Key::Two))
 	{
 		weapon = 2;
 	}
 
-	if (Input::GetKeyDown(Key::O))
+	if (Input::GetKeyDown(Key::Three))
 	{
 		weapon = 3;
 	}
-	if (Input::GetKeyDown(Key::L))
+
+	if (Input::GetKeyDown(Key::Four))
 	{
 		weapon = 4;
 	}
-
 }
 
 void PhysicsPlayground::KeyboardHold()
