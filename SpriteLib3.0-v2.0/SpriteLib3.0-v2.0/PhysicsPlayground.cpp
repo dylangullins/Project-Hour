@@ -536,31 +536,31 @@ void PhysicsPlayground::Update()
 	{//weapon ui
 
 		//auto& Gun = ECS::GetComponent<PhysicsBody>(MainEntities::MainUI());
-		std::string Revolver = "Revolver.png";//cowboy
-		std::string Gat = "Gat.png";//knight
-		std::string LikeButton = "LikeButton.png";//knight
-		std::string BeachBall = "BeachBall.png";//knight
+		std::string Uzi = "Uzi.png";//Uzi
+		std::string CrossBow = "CrossBow.png";//Crossbow
+		std::string Ak = "AK.png";//AK
+		std::string P90 = "P90.png";//P90
 
 		ECS::GetComponent<Transform>(MainEntities::MainUI()).SetPosition(vec3(player.GetPosition().x + 10, player.GetPosition().y + 2, 2.f));
 
 		if (weapon == 1)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 20, 20, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Uzi, 20, 20, false);
 		}
 
 		if (weapon == 2)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Revolver, 20, 20, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(P90, 20, 20, false);
 		}
 
 		if (weapon == 3)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(LikeButton, 20, 20, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Ak, 20, 20, false);
 		}
 
 		if (weapon == 4)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(BeachBall, 20, 20, false);
+			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(CrossBow, 20, 20, false);
 		}
 
 	}
