@@ -510,7 +510,7 @@ void PhysicsPlayground::Update()
 	Scene::AdjustScrollOffset();
 
 
-	std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
+	//std::cout << player.GetPosition().x << ", " << player.GetPosition().y << "\n ";
 
 	player.GetBody()->SetLinearVelocity(b2Vec2(player.GetBody()->GetLinearVelocity().x * 0.888f, player.GetBody()->GetLinearVelocity().y * 0.888f));
 
@@ -532,7 +532,49 @@ void PhysicsPlayground::Update()
 		}
 	}
 
-	
+	{//enemy track
+		for (int x = 0; x < activeEnemies.size(); x++)
+		{
+			auto& enemy = ECS::GetComponent<PhysicsBody>(activeEnemies[x]);
+
+			vec2 total = vec2(player.GetPosition().x - enemy.GetPosition().x, player.GetPosition().y - enemy.GetPosition().y);
+			float length = (sqrt((total.x * total.x) + (total.y * total.y)));
+			vec2 normal = vec2(total.x / length, total.y / length);
+
+			for (int x = 0; x < 50; x++)
+			{
+				if (player.GetPosition().x + x == enemy.GetPosition().x || player.GetPosition().y + x == enemy.GetPosition().y)
+				{
+					enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 50.f, normal.y * 50.f));
+				}
+
+				if (player.GetPosition().x - x == enemy.GetPosition().x || player.GetPosition().y - x == enemy.GetPosition().y)
+				{
+					enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 50.f, normal.y * 50.f));
+				}
+			}
+
+			b2Vec2 Vector = b2Vec2(1.f, 0.f);//0 degrees
+
+			b2Vec2 playerPos = (b2Vec2(player.GetPosition().x, player.GetPosition().y));
+			b2Vec2 enemyPos = (b2Vec2(enemy.GetPosition().x, enemy.GetPosition().y));
+			b2Vec2 playervec = playerPos - enemyPos;
+
+			float dot = (Vector.x * playervec.x + Vector.y * playervec.y);
+			float angle = acos(dot / (playervec.Length() * Vector.Length()));
+
+			if (playervec.y >= 0)
+			{
+				ECS::GetComponent<PhysicsBody>(activeEnemies[x]).SetRotationAngleDeg(angle * (180 / PI));
+			}
+
+			else if (playervec.y < 0)
+			{
+				ECS::GetComponent<PhysicsBody>(activeEnemies[x]).SetRotationAngleDeg(-angle * (180 / PI));
+			}
+		}
+	}
+
 	{//weapon ui
 
 		//auto& Gun = ECS::GetComponent<PhysicsBody>(MainEntities::MainUI());
@@ -796,8 +838,6 @@ void PhysicsPlayground::Update()
 			}
 		}
 	}
-
-	Track();
 }
 
 
@@ -955,51 +995,6 @@ void PhysicsPlayground::KeyboardUp()
 {
 
 
-}
-
-void PhysicsPlayground::Track()
-{
-	for (int i = 0; i < activeEnemies.size(); i++)
-	{
-		auto& player = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer());
-		auto& enemy = ECS::GetComponent<PhysicsBody>(activeEnemies[i]);
-
-		vec2 total = vec2(player.GetPosition().x - enemy.GetPosition().x, player.GetPosition().y - enemy.GetPosition().y);
-		float length = (sqrt((total.x * total.x) + (total.y * total.y)));
-		vec2 normal = vec2(total.x / length, total.y / length);
-
-		for (int x = 0; x < 50; x++)
-		{
-			if (player.GetPosition().x + x == enemy.GetPosition().x || player.GetPosition().y + x == enemy.GetPosition().y)
-			{
-				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
-			}
-
-			if (player.GetPosition().x - x == enemy.GetPosition().x || player.GetPosition().y - x == enemy.GetPosition().y)
-			{
-				enemy.GetBody()->SetLinearVelocity(b2Vec2(normal.x * 100.f, normal.y * 100.f));
-			}
-		}
-
-		b2Vec2 defaultVector = b2Vec2(1.f, 0.f);//0 degrees
-
-		b2Vec2 playerPos = ECS::GetComponent<PhysicsBody>(MainEntities::MainPlayer()).GetPosition();
-		b2Vec2 enemyPos = ECS::GetComponent<PhysicsBody>(activeEnemies[i]).GetPosition();
-		b2Vec2 vectorToPlayer = playerPos - enemyPos;
-
-		float dot = (defaultVector.x * vectorToPlayer.x + defaultVector.y * vectorToPlayer.y);
-		float angle = acos(dot / (vectorToPlayer.Length() * defaultVector.Length()));
-
-		if (vectorToPlayer.y >= 0)
-		{
-			ECS::GetComponent<PhysicsBody>(activeEnemies[i]).SetRotationAngleDeg(angle * (180 / PI));
-		}
-
-		else if (vectorToPlayer.y < 0)
-		{
-			ECS::GetComponent<PhysicsBody>(activeEnemies[i]).SetRotationAngleDeg(-angle * (180 / PI));
-		}
-	}
 }
 
 void PhysicsPlayground::MakePlatform(std::string fileName, float32 x, float32 y, int fx, int fy, float rotation)
