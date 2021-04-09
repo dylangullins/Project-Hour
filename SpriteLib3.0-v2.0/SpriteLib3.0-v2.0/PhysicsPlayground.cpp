@@ -104,6 +104,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 
 	{//Create lab background
 		auto entity = ECS::CreateEntity();
+		ECS::SetIsBackgroundUI(entity, true);
 
 		//Add components
 		ECS::AttachComponent<Sprite>(entity);
@@ -116,7 +117,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(200.f, 0.f, 0.f));
 	}
 
-	{//Create sand background
+	/*{//Create sand background
 		auto entity = ECS::CreateEntity();
 
 		//Add components
@@ -156,7 +157,7 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 500, 500);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 0.f));
-	}
+	}*/
 
 	{//Create healthbar
 		auto entity = ECS::CreateEntity();
@@ -564,7 +565,7 @@ void PhysicsPlayground::Update()
 
 	}
 
-	/*{//background UI change
+	{//background UI change
 
 		std::string background1 = "LabFloors.png";//Lab level
 		std::string background2 = "SandTexture.png";//Wild west level
@@ -575,25 +576,25 @@ void PhysicsPlayground::Update()
 
 		if (player.GetPosition().x <= 500 && player.GetPosition().x >= 0)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background1, 1000, 1000, false);
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background1, 500, 500, false);
 		}
 
-		if (player.GetPosition().x <= 1000 && player.GetPosition().x >= 500)
+		if (player.GetPosition().x <= 3000.f && player.GetPosition().x >= 2000.f)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background2, 1000, 1000, false);
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background2, 500, 500, false);
 		}
 
 		if (player.GetPosition().x <= 1500 && player.GetPosition().x >= 1000)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background3, 1000, 1000, false);
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background3, 500, 500, false);
 		}
 
 		if (player.GetPosition().x <= 2000 && player.GetPosition().x >= 1500)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background4, 1000, 1000, false);
+			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background4, 500, 500, false);
 		}
 
-	}*/
+	}
 
 	{//Health bar UI 
 
@@ -791,24 +792,8 @@ void PhysicsPlayground::Update()
 		{
 			if (player.GetPosition().y >= 200 && player.GetPosition().y <= 220)
 			{
-				player.SetPosition(b2Vec2(550.f, 500.f));
+				player.SetPosition(b2Vec2(2066.f, -30.f));
 			}
-		}
-
-		if (player.GetPosition().x >= 1000 && player.GetPosition().x <= 1010)
-		{
-			player.SetPosition(b2Vec2(1050.f, 500.f));
-			
-		}
-
-		if (player.GetPosition().x >= 1500 && player.GetPosition().x <= 1510)
-		{
-			player.SetPosition(b2Vec2(1550.f, 500.f));
-		}
-
-		if (player.GetPosition().x >= 2000 && player.GetPosition().x <= 2010)
-		{
-			player.SetPosition(b2Vec2(2050.f, 500.f));
 		}
 	}
 
