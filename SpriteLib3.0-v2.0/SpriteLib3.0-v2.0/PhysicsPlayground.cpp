@@ -24,7 +24,6 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 
 	//Setup MainCamera Entity
 	{
-
 		//Creates Camera entity
 		auto entity = ECS::CreateEntity();
 		ECS::SetIsMainCamera(entity, true);
@@ -103,19 +102,60 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Transform>(entity).SetRotationAngleZ(0);
 	}
 
-	{//Create background
+	{//Create lab background
 		auto entity = ECS::CreateEntity();
-		ECS::SetIsBackgroundUI(entity, true);
 
 		//Add components
 		ECS::AttachComponent<Sprite>(entity);
 		ECS::AttachComponent<Transform>(entity);
 
 		//set components
-		std::string fileName = "Labwall.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
+		std::string fileName = "LabFloors.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 700, 700);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
-		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 1.f));
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(200.f, 0.f, 0.f));
+	}
+
+	{//Create sand background
+		auto entity = ECS::CreateEntity();
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "SandTexture.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 500, 500);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 0.f));
+	}
+
+	{//Create inside background
+		auto entity = ECS::CreateEntity();
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "WestFloor(1).png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 500, 500);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 0.f));
+	}
+
+	{//Create outside background
+		auto entity = ECS::CreateEntity();
+
+		//Add components
+		ECS::AttachComponent<Sprite>(entity);
+		ECS::AttachComponent<Transform>(entity);
+
+		//set components
+		std::string fileName = "GrassTexture.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 500, 500);
+		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
+		ECS::GetComponent<Transform>(entity).SetPosition(vec3(1000.f, 1000.f, 0.f));
 	}
 
 	{//Create healthbar
@@ -127,8 +167,8 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 
 		//set components
-		std::string fileName = "hexagon.gif";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 90, 30);
+		std::string fileName = "HealthBarFull.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 100, 100);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(100.f, 100.f, 1.f));
 	}
@@ -157,8 +197,8 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::AttachComponent<Transform>(entity);
 
 		//set components
-		std::string fileName = "LikeButton.png";
-		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 25, 25);
+		std::string fileName = "Slide_4.png";
+		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 75, 75);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(20.f, 20.f, 1.f));
 	}
@@ -524,12 +564,12 @@ void PhysicsPlayground::Update()
 
 	}
 
-	{//background UI change
+	/*{//background UI change
 
-		std::string background1 = "Labwall.png";//cowboy
-		std::string background2 = "Gat.png";//knight
-		std::string background3 = "LikeButton.png";//knight
-		std::string background4 = "BeachBall.png";//knight
+		std::string background1 = "LabFloors.png";//Lab level
+		std::string background2 = "SandTexture.png";//Wild west level
+		std::string background3 = "WestFloor(1).png";//inside level
+		std::string background4 = "GrassTexture.png";//oustide level
 
 		ECS::GetComponent<Transform>(MainEntities::BackgroundUI()).SetPosition(vec3(player.GetPosition().x, player.GetPosition().y, 0.f));
 
@@ -553,59 +593,59 @@ void PhysicsPlayground::Update()
 			ECS::GetComponent<Sprite>(MainEntities::BackgroundUI()).LoadSprite(background4, 1000, 1000, false);
 		}
 
-	}
+	}*/
 
 	{//Health bar UI 
 
-		std::string Hp7 = "BeachBall.png";//Max hp
-		std::string Hp6 = "ScientistEnemy.gif";//Near Max hp
-		std::string Hp5 = "LikeButton.png";//Near Mid hp
-		std::string Hp4 = "Gat.png";//Mid hp
-		std::string Hp3 = "LikeButton.png";//Lower than Mid hp
-		std::string Hp2 = "BeachBall.png";//near low hp
-		std::string Hp1 = "ScientistEnemy.gif";//Low hp
-		std::string Hp0 = "hexagon.gif";//Dead
+		std::string Hp7 = "HealthBarFull.png";//Max hp
+		std::string Hp6 = "HealthBar6.png";//Near Max hp
+		std::string Hp5 = "Healthbar5.png";//Near Mid hp
+		std::string Hp4 = "HealthBar4.png";//Mid hp
+		std::string Hp3 = "HealthBar3.png";//Lower than Mid hp
+		std::string Hp2 = "HealthBar2.png";//near low hp
+		std::string Hp1 = "HealthBar1.png";//Low hp
+		std::string Hp0 = "Empty.png";//Dead
 
-		ECS::GetComponent<Transform>(MainEntities::HealthUI()).SetPosition(vec3(player.GetPosition().x - 80.f, player.GetPosition().y + 55.f, 50.f));
+		ECS::GetComponent<Transform>(MainEntities::HealthUI()).SetPosition(vec3(player.GetPosition().x - 60.f, player.GetPosition().y + 25, 50.f));
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp = 70)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp7, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp7, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 70 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 60)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp6, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp6, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 60 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 50)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp5, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp5, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 50 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 40)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp4, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp4, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 40 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 40)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp3, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp3, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 30 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 20)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp2, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp2, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 20 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 10)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp1, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp1, 100, 100, false);
 		}
 
 		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 10 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 0)
 		{
-			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp0, 90, 30, false);
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp0, 100, 100, false);
 		}
 	}
 
@@ -713,46 +753,46 @@ void PhysicsPlayground::Update()
 
 	{//tutorial change 
 
-		std::string tut1 = "LikeButton.png";//weapon 1 tutorial
-		std::string tut2 = "Gat.png";//weapon 2 tutorial
-		std::string tut3 = "LikeButton.png";//weapon 3 tutorial
-		std::string tut4 = "BeachBall.png";//weapon 4 tutorial
-		std::string tut5 = "LikeButton.png";//weapon 4 tutorial
-		std::string tut6 = "Gat.png";//weapon 4 tutorial
+		std::string tut1 = "Slide_1.png";//Slie 1 tutorial
+		std::string tut2 = "Slide_2.png";//Slide 2 tutorial
+		std::string tut3 = "Slide_3.png";//Slide 3 tutorial
+		std::string tut4 = "Slide_4.png";//Slide 4 tutorial
 
 
-		ECS::GetComponent<Transform>(MainEntities::Tutorial()).SetPosition(vec3(20.f, 20.f, 1.f));
+		ECS::GetComponent<Transform>(MainEntities::Tutorial()).SetPosition(vec3(0.f, 60.f, 1.f));
 
 		if (Input::GetKey(Key::U))
 		{
-			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut1, 25, 25, false);
-		
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut4, 75, 75, false);
 		}
 
 		if (Input::GetKey(Key::I))
 		{
-			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut2, 25, 25, false);
-		
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut3, 75, 75, false);
+
 		}
 
 		if (Input::GetKey(Key::O))
 		{
-			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut3, 25, 25, false);
-			
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut2, 75, 75, false);
+
 		}
 
 		if (Input::GetKey(Key::J))
 		{
-			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut4, 25, 25, false);
-			
+			ECS::GetComponent<Sprite>(MainEntities::Tutorial()).LoadSprite(tut1, 75, 75, false);
+
 		}
 	}
 
 	{// tp player when they get to next level
 
-		if (player.GetPosition().x >= 500 && player.GetPosition().x <= 510)
+		if (player.GetPosition().x >= 140 && player.GetPosition().x <= 150)
 		{
-			player.SetPosition(b2Vec2(550.f, 500.f));
+			if (player.GetPosition().y >= 200 && player.GetPosition().y <= 220)
+			{
+				player.SetPosition(b2Vec2(550.f, 500.f));
+			}
 		}
 
 		if (player.GetPosition().x >= 1000 && player.GetPosition().x <= 1010)
