@@ -162,8 +162,8 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	}
 
 	/*
-	The Lab
-	*/
+		The Lab
+		*/
 	std::string fileName = "LabWall.png";
 	MakePlatform(fileName, 0.f, 0.f, 100, 10, 0.f);
 	MakePlatform(fileName, -50.f, 50, 10, 100, 0.f);
@@ -204,18 +204,257 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 	MakePlatform(fileName, 700.f, 180.f, 185, 10, 0.f);
 	MakePlatform(fileName, 594.f, 201.f, 60, 10, 130.f);
 
-	{// enemy spawner
-		std::string enemy1 = "hexagon.gif";//cowboy
-		std::string enemy2 = "enemy2.png";//knight
-		std::string enemy3 = "ScientistEnemy.gif";//male
-		std::string enemy4 = "ScientistEnemy2.gif";//female
-		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 50.f, 50.f, 0.f));
-		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 60.f, 60.f, 0.f));
-		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 100.f, 100.f, 0.f));
-		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 120.f, 120.f, 0.f));
-		activeEnemies.push_back(Scene::CreateEnemy(enemy3, 20.f, 20.f, 500.f, 500.f, 0.f));
-		activeEnemies.push_back(Scene::CreateEnemy(enemy4, 20.f, 20.f, 200.f, -300.f, 0.f));
 
+	{// enemy spawner for the lab 
+		std::string fileName = "Front.png";
+
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 81.f, 150.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 192.f, -360.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 230.f, -379.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 210.f, -260.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 185.f, -197.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 145.f, -232.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 150.f, -373.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 93.f, -481.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 150.f, -550.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 225.f, -500, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 387.f, -550.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 471.f, -540.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 400.f, -465.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 570.f, 476.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 690.f, 60.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 741.f, 148.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 600.f, 161.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 398.f, 110.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 600.f, 110.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 450.f, -15.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 525.f, -80.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 755.f, 200.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 760.f, 255.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 75.f, -290.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 113.f, -321.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 366.f, -510.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 543.f, -245.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 550.f, -170.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 614.f, -170.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 650.f, -44.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 679.f, 72.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 475.f, 125.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 531.f, 125.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 606.f, 230.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 660.f, 202.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 328.f, 228.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 386.f, -120.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 448.f, -120.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 382.f, -247.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 458.f, -247.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 72.f, -420.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 156.f, 30.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 180.f, -73.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 229.f, -139.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 308.f, -70.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 271.f, 95.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 252.f, -312.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 270.f, -242.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 352.f, -279.f, 0.f));
+	}
+	{
+		std::string fileName = "Control.png";
+		MakePlatform(fileName, 480.f, 70.f, 60, 60, 0.f);
+		MakePlatform(fileName, 510.f, 70.f, 60, 60, 0.f);
+		MakePlatform(fileName, 545.f, 70.f, 60, 60, 0.f);
+	}
+	{
+		std::string fileName = "TimeMachine.png";
+		MakePlatform(fileName, 115.f, 225.f, 80, 80, 0.f);
+	}
+	{
+		std::string fileName = "Tank.png";
+		MakePlatform(fileName, -30.f, 30.f, 80, 80, 0.f);
+	}
+	{
+		std::string fileName = "Desk.png";
+		MakePlatform(fileName, 362.f, -450.f, 50, 50, 0.f);
+		MakePlatform(fileName, 442.f, -450.f, 50, 50, 0.f);
+		MakePlatform(fileName, 509.f, -450.f, 50, 50, 0.f);
+		MakePlatform(fileName, 403.f, 130.f, 50, 50, 0.f);
+		MakePlatform(fileName, 610.f, 130.f, 50, 50, 0.f);
+	}
+	{
+		std::string fileName = "LabCounter.png";
+		MakePlatform(fileName, 476.f, -555.f, 100, 100, 0.f);
+		MakePlatform(fileName, 376.f, -555.f, 100, 100, 0.f);
+		MakePlatform(fileName, 276.f, -555.f, 100, 100, 0.f);
+	}
+	{
+		std::string fileName = "CafTable.png";
+		MakePlatform(fileName, 225.f, -255.f, 50, 50, 0.f);
+		MakePlatform(fileName, 175.f, -255.f, 50, 50, 0.f);
+		MakePlatform(fileName, 210.f, -185.f, 50, 50, 0.f);
+		MakePlatform(fileName, 160.f, -185.f, 50, 50, 0.f);
+		MakePlatform(fileName, 110.f, -185.f, 50, 50, 0.f);
+
+	}
+
+	{
+		std::string fileName = "Table.png";
+		//SetArt(fileName, 210.f, -380.f, 80, 80, 0.f);
+	}
+
+	//Sets up wild wild west walls 
+	{
+		std::string fileName = "WoodenWall.png";
+		MakePlatform(fileName, 1990.f, -150.f, 10, 300, 0.f);
+		MakePlatform(fileName, 2060.f, 0.f, 150, 10, 0.f);
+		MakePlatform(fileName, 2060.f, -300.f, 155, 10, 0.f);
+		MakePlatform(fileName, 2135.f, -57.f, 10, 125, 0.f);
+		MakePlatform(fileName, 2135.f, -120.f, 10, 50, 0.f);
+		MakePlatform(fileName, 2135.f, -250.f, 10, 90, 0.f);
+		MakePlatform(fileName, 2025.f, -100.f, 60, 10, 0.f);
+		MakePlatform(fileName, 2115.f, -100.f, 40, 10, 0.f);
+		MakePlatform(fileName, 2300.f, -100.f, 90, 10, 0.f);
+		MakePlatform(fileName, 2460.f, -100.f, 90, 10, 0.f);
+		MakePlatform(fileName, 2260.f, -25.f, 120, 10, 0.f);
+		MakePlatform(fileName, 2480.f, -25.f, 120, 10, 0.f);
+		MakePlatform(fileName, 2500.f, -65.f, 10, 80, 0.f);
+		MakePlatform(fileName, 2250.f, -65.f, 10, 80, 0.f);
+		MakePlatform(fileName, 2205.f, 25.f, 10, 90, 0.f);
+		MakePlatform(fileName, 2540.f, 50.f, 10, 160, 0.f);
+		MakePlatform(fileName, 2120.f, 40.f, 160, 10, 0.f);
+		MakePlatform(fileName, 2040.f, 105.f, 10, 140, 0.f);
+		MakePlatform(fileName, 2120.f, 170.f, 160, 10, 0.f);
+		MakePlatform(fileName, 2205.f, 190.f, 10, 150, 0.f);
+		MakePlatform(fileName, 2370.f, 270.f, 340, 10, 0.f);
+		MakePlatform(fileName, 2540.f, 225.f, 10, 100, 0.f);
+		MakePlatform(fileName, 2500.f, -250.f, 10, 90, 0.f);
+		MakePlatform(fileName, 2500.f, -385.f, 10, 90, 0.f);
+		MakePlatform(fileName, 2630.f, -430.f, 250, 10, 0.f);
+		MakePlatform(fileName, 2750.f, -200.f, 10, 444, 0.f);
+		MakePlatform(fileName, 2540, -200.f, 90, 10, 0.f);
+		MakePlatform(fileName, 2590.f, -90.f, 10, 230, 0.f);
+		MakePlatform(fileName, 2670.f, 20.f, 165, 10, 0.f);
+
+	}
+	//Sets enemies for wil wild west
+	{
+		std::string fileName = "Front.png";
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2275.f, -80.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2290.f, -50.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2323.f, -80.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2426.f, -80.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2475.f, -80.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2475.f, -50.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2100.f, -265.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 233.f, -213.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 230.f, -270.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2157.f, -97.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2287.f, -120.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2483.f, -278.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2607.f, -260.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2515.f, -180.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2560.f, -180.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2550.f, -160.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2555.f, 120.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2555.f, 180.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2480.f, -344.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2560.f, -370.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2650.f, -370.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2540.f, -240.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2719.f, -136.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2631.f, -106.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2704.f, -121.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2701.f, -365.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2483.f, 66.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2499.f, 219.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2433.f, 245.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2442.f, 215.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2433.f, 245.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2442.f, 215.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2252.f, 45.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2231.f, 1.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2285.f, 5.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2248.f, 34.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 274.f, 78.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2186.f, 127.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2361.f, 90.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2345.f, 60.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2396.f, 81.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2100.f, 150.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2100.f, 112.f, 0.f));
+		activeEnemies.push_back(Scene::CreateEnemy(fileName, 20, 20, 2075.f, 115.f, 0.f));
+	}
+	{
+		std::string fileName = "Table.png";
+		MakePlatform(fileName, 2466.f, 234.f, 90, 90, 0.f);
+		MakePlatform(fileName, 2371.f, 67.f, 90, 90, 0.f);
+		MakePlatform(fileName, 2257.f, 10.f, 90, 90, 0.f);
+		MakePlatform(fileName, 2081.f, 135.f, 90, 90, 0.f);
+	}
+	{
+		std::string fileName = "Counter.png";
+		MakePlatform(fileName, 2350.f, 250.f, 100, 100, 0.f);
+		MakePlatform(fileName, 2026.f, -40.f, 100, 100, 0.f);
+
+	}
+	{
+		std::string fileName = "CounterL.png";
+		MakePlatform(fileName, 2255.f, 250.f, 100, 100, 0.f);
+	}
+	{
+		std::string fileName = "WestPianoA.png";
+		MakePlatform(fileName, 2500.f, 15.f, 70, 70, 270.f);
+	}
+	{
+		std::string fileName = "Shelf.png";
+		MakePlatform(fileName, 2360.f, 250.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2330.f, 250.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2310.f, 250.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2280.f, 250.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2250.f, 250.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2040.f, -138.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2045.f, -244.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2066.f, -244.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2087.f, -244.f, 60, 40, 0.f);
+		MakePlatform(fileName, 2017.f, -138.f, 60, 40, 0.f);
+	}
+	{
+		std::string fileName = "HorseStable.png";
+		MakePlatform(fileName, 2215.f, -67.f, 60, 90, 0.f);
+	}
+	{
+		std::string fileName = "WoodBench.png";
+		MakePlatform(fileName, 2590.f, -50.f, 50, 50, 90.f);
+		MakePlatform(fileName, 2734.f, -50.f, 50, 50, 90.f);
+		MakePlatform(fileName, 2590.f, -123.f, 50, 50, 90.f);
+		MakePlatform(fileName, 2734.f, -163.f, 50, 50, 90.f);
+		MakePlatform(fileName, 2734.f, -104.f, 50, 50, 90.f);
+	}
+	{
+		std::string fileName = "Cell.png";
+		MakePlatform(fileName, 2640.f, -180.f, 100, 100, 0.f);
+	}
+	{
+		std::string fileName = "Desk.png";
+		MakePlatform(fileName, 2701.f, -425.f, 50, 50, 0.f);
+		MakePlatform(fileName, 2637.f, -425.f, 50, 50, 0.f);
+	}
+	{
+		std::string fileName = "WoodTable.png";
+		MakePlatform(fileName, 2530.f, -390.f, 50, 50, 0.f);
+	}
+	{
+		std::string fileName = "Stool.png";
+		MakePlatform(fileName, 2570.f, -415.f, 40, 40, 0.f);
+		MakePlatform(fileName, 2545.f, -415.f, 40, 40, 0.f);
+		MakePlatform(fileName, 2561.f, -396.f, 40, 40, 0.f);
+		MakePlatform(fileName, 2561.f, -374.f, 40, 40, 0.f);
+		MakePlatform(fileName, 2543.f, -356.f, 40, 40, 0.f);
+		MakePlatform(fileName, 2524.f, -356.f, 40, 40, 0.f);
+
+	}
+	{
+		std::string fileName = "Sign.png";
+		MakePlatform(fileName, 2480.f, -257.f, 40, 40, 0.f);
 	}
 
 	ECS::GetComponent<HorizontalScroll>(MainEntities::MainCamera()).SetFocus(&ECS::GetComponent<Transform>(MainEntities::MainPlayer()));
@@ -251,7 +490,8 @@ void PhysicsPlayground::Update()
 	}
 
 	
-	{
+	{//weapon ui
+
 		//auto& Gun = ECS::GetComponent<PhysicsBody>(MainEntities::MainUI());
 		std::string Revolver = "Revolver.png";//cowboy
 		std::string Gat = "Gat.png";//knight
@@ -263,8 +503,6 @@ void PhysicsPlayground::Update()
 		if (weapon == 1)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::MainUI()).LoadSprite(Gat, 20, 20, false);
-
-			//Gun.SetRotationAngleDeg(player.GetRotationAngleDeg());
 		}
 
 		if (weapon == 2)
