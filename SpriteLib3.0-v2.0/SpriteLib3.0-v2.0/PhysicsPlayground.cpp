@@ -64,9 +64,11 @@ void PhysicsPlayground::InitScene(float windowWidth, float windowHeight)
 		ECS::GetComponent<Sprite>(entity).LoadSprite(fileName, 20, 20);
 		ECS::GetComponent<Sprite>(entity).SetTransparency(1.f);
 		ECS::GetComponent<Transform>(entity).SetPosition(vec3(0.f, 30.f, 30.f));
+		ECS::GetComponent<HP>(entity).hp = 70;
 
 		auto& tempSpr = ECS::GetComponent<Sprite>(entity);
 		auto& tempPhsBody = ECS::GetComponent<PhysicsBody>(entity);
+		
 
 		float shrinkX = 35.f;
 
@@ -555,16 +557,28 @@ void PhysicsPlayground::Update()
 
 	{//Health bar UI 
 
-		std::string Hp5 = "LikeButton.png";//Max hp
-		std::string Hp4 = "Gat.png";//Near Max hp
-		std::string Hp3 = "LikeButton.png";//Half hp
+		std::string Hp7 = "BeachBall.png";//Max hp
+		std::string Hp6 = "ScientistEnemy.gif";//Near Max hp
+		std::string Hp5 = "LikeButton.png";//Near Mid hp
+		std::string Hp4 = "Gat.png";//Mid hp
+		std::string Hp3 = "LikeButton.png";//Lower than Mid hp
 		std::string Hp2 = "BeachBall.png";//near low hp
 		std::string Hp1 = "ScientistEnemy.gif";//Low hp
 		std::string Hp0 = "hexagon.gif";//Dead
 
-		ECS::GetComponent<Transform>(MainEntities::HealthUI()).SetPosition(vec3(player.GetPosition().x - 80.f, player.GetPosition().y + 75.f, 50.f));
+		ECS::GetComponent<Transform>(MainEntities::HealthUI()).SetPosition(vec3(player.GetPosition().x - 80.f, player.GetPosition().y + 55.f, 50.f));
 
-		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp = 50)
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp = 70)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp7, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 70 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 60)
+		{
+			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp6, 90, 30, false);
+		}
+
+		if (ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp < 60 && ECS::GetComponent<HP>(MainEntities::MainPlayer()).hp >= 50)
 		{
 			ECS::GetComponent<Sprite>(MainEntities::HealthUI()).LoadSprite(Hp5, 90, 30, false);
 		}
